@@ -5,10 +5,10 @@
         <div class="container">
             <div class="row d-flex justify-content-start">
                 <div class="col-lg-8">
-                    <h1 class="fw-bolder text-light mt-4">Tingkatkan Efisiensi Pengajaran Sekolah</h1>
-                    <p class="text-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nemo
-                        nihil temporibus, quae omnis, dignissimos reprehenderit provident quibusdam debitis impedit
-                        reiciendis facere corporis repellendus voluptas, sequi atque magni</p>
+                    <h1 class="fw-bolder text-light mt-4">Ambil Kendali Masa Depanmu</h1>
+                    <p class="text-light">Kampus Merdeka adalah cara terbaik berkuliah.
+                        Dapatkan kemerdekaan untuk membentuk masa depan yang
+                        sesuai dengan aspirasi kariermu.</p>
                 </div>
                 <div class="col-lg-6">
                     <button onclick="return movePageRegis()" class="btn btn-primary custom-button fw-bold shadow mb-3"><span
@@ -45,12 +45,8 @@
             <div class="row justify-content-center text-start mb-4">
                 <div class="col-lg-6 col-12">
                     <h1 class="fw-bold">Kampus Merdeka</h1>
-                    <p>Program persiapan karier yang komprehensif untuk mempersiapkan generasi terbaik Indonesia</p>
-                    <p>
-                        Kampus Merdeka adalah bagian dari kebijakan Merdeka Belajar oleh Kementerian Pendidikan,
-                        Kebudayaan, Riset, dan Teknologi (Kemendikbudristek) yang memberikan seluruh mahasiswa <span
-                            class="text-warning fw-bold">kesempatan untuk mengasah kemampuan sesuai bakat dan
-                            minat dengan terjun langsung ke dunia kerja</span> sebagai langkah persiapan karier.
+                    Mengajar di Sekolah merupakan salah satu bentuk BKP MB-KM yang
+membuka kesempatan kepada mahasiswa untuk belajar secara langsung dari dunia nyata dengan mempraktikkan belajar melalui pengalaman (experiential learning).
                     </p>
                 </div>
                 <div class="col-lg-6 col-12">

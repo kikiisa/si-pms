@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProgramKegiatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,10 +15,21 @@ class DashboardController extends Controller
             return view('backend.dashboard.index');
         }elseif(Auth::guard('pamongs')->check())
         {
-            return view('backend.dashboard.pamong');
+            
+            $program = ProgramKegiatan::with('pamongs')->where('pamong_id',Auth::guard('pamongs')->user()->id)->count();
+            return view('backend.dashboard.pamong',compact('program'));
         }elseif(Auth::guard('dpls')->check())
         {
-            return view('backend.dashboard.dpl');
+            if(Auth::guard('dpls')->user()->roles == 'mk')
+            {
+                $program = ProgramKegiatan::with('user')->count();
+
+            }else{
+                $program = ProgramKegiatan::with('user')->where('dpl_id',Auth::guard('dpls')->user()->id)->count();
+            }
+            return view('backend.dashboard.dpl',[
+                'program' => $program
+            ]);
         }else{
             return view('backend.dashboard.operator');
         }

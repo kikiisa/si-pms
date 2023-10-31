@@ -55,9 +55,7 @@
             <div class="row p-4">
                 <div class="col-lg-6 mb-4">
                     <h1 class="fw-bold text-light">SI-PMS</h1>
-                    <p class="text-light">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, esse,
-                        perspiciatis sunt consectetur hic eveniet dolorum aperiam deserunt quia dolorem autem,
-                        reiciendis cumque placeat nisi animi nemo provident voluptas? Veritatis.</p>
+                    <p class="text-light">Merupakan aplikasi berbasis web yang bertujuan untuk membantu pengelolaan Kegiatan Program Mengajar di Sekolah dI Prodi Pendidiken Teknologi Informasi Universitas Negeri Gorontalo.</p>
                     <img src="/public/images/mbkm.png" width="100" alt="" srcset="">
                     <img src="/public/images/ung.png" class="ms-3" width="60" alt="" srcset="">
                 </div>
