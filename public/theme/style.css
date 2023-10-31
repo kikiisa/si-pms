@@ -1,0 +1,49 @@
+:root{
+    --primary-color: #682BE0;
+}
+
+
+.bg-primary{
+    background-color: var(--primary-color);
+}
+.primary{
+    background-color: var(--primary-color);
+}
+
+body{
+    font-family: 'Inter', sans-serif;
+    background-color:#EFF0F0;
+}
+
+.hero-bg {
+    background-image: url('../theme/images/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+   
+    /* background: linear-gradient(90deg, rgb(245, 240, 255) 0%, rgb(185, 185, 185) 100%); */
+    padding-top: 60px;
+    padding-bottom: 50px;
+}
+
+.btn-primary{
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover{
+    background-color: #682BE0;
+}
+
+.custom-button{
+    width: 200px;
+    height: 50px;
+}
+
+#statistik {
+    background-color: #EADFF4;
+}
+
+.social{
+    color: white;
+}
