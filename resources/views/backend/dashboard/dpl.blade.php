@@ -6,7 +6,7 @@
         </div>
         <div class="section-body">
             <div class="row">
-                @if (Auth::guard('dpls')->user()->roles == 'mk')
+               
                 <div class="col-lg-6">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-primary">
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 </div>  
-                @endif
+              
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">

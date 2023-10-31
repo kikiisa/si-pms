@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dpl;
+use App\Models\Pamong;
 use App\Models\ProgramKegiatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +33,12 @@ class DashboardController extends Controller
                 'program' => $program
             ]);
         }else{
-            return view('backend.dashboard.operator');
+            return view('backend.dashboard.operator',[
+                'mahasiswa' => ProgramKegiatan::with('user')->count(),
+                'dpl' => Dpl::all()->count(),
+                'pamong' => Pamong::all()->count(),
+                'mk' => Dpl::all()->where('roles','mk')->count() 
+            ]);
         }
     }
 }

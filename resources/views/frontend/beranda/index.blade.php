@@ -46,7 +46,7 @@
                 <div class="col-lg-6 col-12">
                     <h1 class="fw-bold">Kampus Merdeka</h1>
                     Mengajar di Sekolah merupakan salah satu bentuk BKP MB-KM yang
-membuka kesempatan kepada mahasiswa untuk belajar secara langsung dari dunia nyata dengan mempraktikkan belajar melalui pengalaman (experiential learning).
+                    membuka kesempatan kepada mahasiswa untuk belajar secara langsung dari dunia nyata dengan mempraktikkan belajar melalui pengalaman (experiential learning).
                     </p>
                 </div>
                 <div class="col-lg-6 col-12">
