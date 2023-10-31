@@ -19,9 +19,9 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-3">
-                        @isset($record->image)
+                        @isset(Auth::user()->profile)
                             <div class="card">
-                                <img src="{{ asset('storage/profile/'.Auth::user()->image) }}" class="card-img-top" alt="" srcset="">
+                                <img src="{{ asset(Auth::user()->profile) }}" class="card-img-top" alt="" srcset="">
                             </div>
                         @else
                             <div class="card">
@@ -65,36 +65,6 @@
                     </div>
                   
                 </div>    
-            </div>
-        @endif
-        @if (Auth::guard('pamongs')->check())
-            <div class="section-body">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5>Selamat Datang, <strong>{{Auth::guard('pamongs')->user()->name}}</strong></h5>
-                                <hr>
-                                <h6>Jabatan : <strong>Guru Pamong</strong></h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-        @if (Auth::guard('dpls')->check())
-            <div class="section-body">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5>Selamat Datang, <strong>{{Auth::guard('dpls')->user()->name}}</strong></h5>
-                                <hr>
-                                <h6>Jabatan : <strong>Dosen <span class="text-uppercase">{{Auth::guard('dpls')->user()->roles}}</span></strong></h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         @endif
     </section>

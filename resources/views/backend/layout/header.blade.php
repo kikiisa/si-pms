@@ -6,7 +6,11 @@
     </form>
     <ul class="navbar-nav navbar-right">         
         <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            <img alt="image" src="{{ asset('vendor/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
+            @auth
+                <img alt="image" src="{{ asset(Auth::user()->profile) }}" class="rounded-circle mr-1">
+            @else  
+                <img alt="image" src="{{ asset('vendor/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
+            @endauth
             
             <div class="d-sm-none d-lg-inline-block">Hi, 
                 @if (Auth::check())
@@ -24,7 +28,7 @@
                     
             </div></a>
             <div class="dropdown-menu dropdown-menu-right">        
-            <a href="" class="dropdown-item has-icon">
+            <a href="{{Route('profile.index')}}" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profile
             </a>                
             <a onclick="return confirm('apakah anda yakin ingin keluar dari sistem ?')" href="{{Route('auth.logout')}}" class="dropdown-item has-icon text-danger">

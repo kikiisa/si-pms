@@ -8,6 +8,7 @@ use App\Http\Controllers\DplController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LogbookController;
 use App\Http\Controllers\PamongController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RencanaKegiatanController;
 use App\Http\Controllers\UserControlller;
@@ -38,6 +39,10 @@ Route::post('/registrasi',[RegisterController::class,'store'])->name('register.s
 
 // ini halaman dashboard
 Route::prefix('/account')->group(function(){
+    // halaman edit profile
+    Route::put('profile-update/{id}',[ProfileController::class,'profile'])->name('profile.image');
+    Route::resource('profile',ProfileController::class);
+
     Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
 
     // halaman log book
