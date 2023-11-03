@@ -47,11 +47,11 @@
         </ul>    
         
         <ul class="sidebar-menu">
-            <li><a class="nav-link"
-                    href="{{ Route('dashboard') }}"><i class="fa fa-cube"></i> <span>Master Operator</span></a></li>
+            <li class="{{ Route::current()->getName() == 'operator.index' ? 'active' : '' }}"><a class="nav-link"
+                    href="{{ Route('operator.index') }}"><i class="fa fa-cube"></i> <span>Master Operator</span></a></li>
         </ul>    
         <ul class="sidebar-menu">
-            <li><a class="nav-link"
+            <li class="{{ Route::current()->getName() == 'dosen.index' ? 'active' : '' }}"><a class="nav-link"
                     href="{{Route('pengaturan.index')}}"><i class="fa fa-wrench"></i> <span>Pengaturan</span></a></li>
         </ul>    
     @endif

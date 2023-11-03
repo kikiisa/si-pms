@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DplController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LogbookController;
+use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PamongController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
@@ -67,6 +68,7 @@ Route::prefix('/account')->group(function(){
     Route::resource('dosen',DplController::class);
     Route::resource('logbook',LogbookController::class);
     Route::resource('pengaturan',SettingController::class);
+    Route::resource('operator',OperatorController::class);
 });
 
 

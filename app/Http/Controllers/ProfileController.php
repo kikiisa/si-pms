@@ -34,7 +34,7 @@ class ProfileController extends Controller
         {
             return view('backend.profile.dpls');
         }else{
-            
+            return view('backend.profile.operator');
         }
     }
 
@@ -247,7 +247,43 @@ class ProfileController extends Controller
                 }
             }
         }else{
-            
+            $operator = Dpl::find(Auth::guard('operators')->user()->id);
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'username' => 'required',
+            ]);
+            if($request->new != '')
+            {
+                $request->validate([
+                    'new'  => 'required|min:8',
+                    'confirm' => 'required|same:new'
+                ]);
+                $operator->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'username' => $request->username,
+                    'password' => bcrypt($request->new)
+                ]);
+                if($operator)
+                {
+                    return redirect()->route('profile.index')->with('success','Berhasil');
+                }else{
+                    return redirect()->route('profile.index')->with('error','Gagal');
+                }
+            }else{
+                $operator->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'username' => $request->username,
+                ]);
+                if($operator)
+                {
+                    return redirect()->route('profile.index')->with('success','Berhasil');
+                }else{
+                    return redirect()->route('profile.index')->with('error','Gagal');
+                }
+            }
         }
     }
 
