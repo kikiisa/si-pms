@@ -32,7 +32,7 @@
                                                     <form action="{{Route('operator.destroy',$item->id)}}" method="post">
                                                         @csrf
                                                         @method("DELETE")
-                                                        <button class="btn btn-danger" onclick="return confirm('apakah anda ingin menghapus  data ini ?')">Hapus</button>
+                                                        <button class="btn btn-danger" onclick="return confirm('apakah anda ingin menghapus  data ini ? konsekuensi nya sangat besar')">Hapus</button>
                                                         <a href="{{Route('operator.edit',$item->uuid)}}" class="btn btn-warning">Edit</a>
                                                     </form>
                                                 </td>
