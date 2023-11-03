@@ -100,7 +100,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" onclick="return confirm('apakah anda yakin dengan data diatas ? jika yakin maka selanjutnya mengupload document legalitas')" class="btn btn-dark btn-lg btn-block">
+                                        <button type="submit" onclick="return confirm('apakah anda yakin dengan data diatas ? jika yakin maka selanjutnya mengupload document legalitas')" class="btn btn-primary btn-lg btn-block">
                                             simpan 
                                         </button>
                                     </div>

@@ -76,7 +76,7 @@
                                     </div>
                                     <div class="form-group">
 
-                                        <button type="submit" class="btn btn-dark btn-lg btn-block" tabindex="4">
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                                             Login
                                         </button>
                                         <p class="mt-2">Sudah Punya Account ? <a href="{{Route('register')}}">Registrasi</a></p>

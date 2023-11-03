@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pengaturans', function (Blueprint $table) {
+        Schema::create('informasis', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
             $table->string('title');
-            $table->string('judul');
-            $table->string('sub_judul');
-            $table->text('deskripsi_full');
-            $table->string('sk_rektor');
-            $table->string('surat_pernyataan');
+            $table->string('slug');
+            $table->text('content');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pengaturans');
+        Schema::dropIfExists('informasis');
     }
 };

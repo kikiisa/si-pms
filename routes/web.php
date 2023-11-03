@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DplController;
+use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LogbookController;
 use App\Http\Controllers\OperatorController;
@@ -69,6 +70,8 @@ Route::prefix('/account')->group(function(){
     Route::resource('logbook',LogbookController::class);
     Route::resource('pengaturan',SettingController::class);
     Route::resource('operator',OperatorController::class);
+    Route::resource('post',InformasiController::class);
+    Route::get('post/{id}',[InformasiController::class,'show'])->name('post.detail');
 });
 
 
