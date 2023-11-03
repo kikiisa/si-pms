@@ -9,35 +9,41 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            
+
                             @if (Auth::check())
                                 @if ($program->count() > 0)
                                     @if ($program->first()->nama_kegiatan != '')
-                                        <button class="mb-4 btn btn-primary" onclick="return openModal()">Tambah Log Book</button>
+                                        <form action="{{ Route('logbook.index') }}" method="get">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <select name="q" id="q" class="form-control">
+                                                        <option value="">Pilih Rekapan</option>
+                                                        <option value="mingguan">Mingguan</option>
+                                                        <option value="harian">Harian</option>
+                                                    </select>
+                                                    @if (!Auth::check())
+                                                        <input type="text" hidden value="{{ request()->segment(3) }}"
+                                                            name="nim">
+                                                    @endif
+                                                </div>
+                                                <button class="btn btn-primary" name="aksi"
+                                                    value="filter">Filter</button>
+                                                <button class="btn btn-warning" name="aksi" value="cetak">cetak <i
+                                                        class="fa fa-print"></i></button>
+                                            </div>
+                                        </form>
+                                        <button class="mb-4 btn btn-primary" onclick="return openModal()">Tambah Log
+                                            Book</button>
                                     @else
                                         <div class="alert alert-danger text-center">Silahkan Upload Rencana Kegiatan Untuk
                                             Melakukan Pengisian Log Book</div>
                                     @endif
                                 @else
-                                    <div class="alert alert-danger text-center">Belum mendapatkan Pembagian DPL Dan Pamong</div>
+                                    <div class="alert alert-danger text-center">Belum mendapatkan Pembagian DPL Dan Pamong
+                                    </div>
                                 @endif
                             @endif
-                            <form action="{{Route('logbook.index')}}" method="get">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <select name="q" id="q" class="form-control">
-                                            <option value="">Pilih Rekapan</option>
-                                            <option value="mingguan">Mingguan</option>
-                                            <option value="harian">Harian</option>
-                                        </select>
-                                        @if (!Auth::check())
-                                            <input type="text" hidden value="{{request()->segment(3)}}" name="nim">
-                                        @endif
-                                    </div>
-                                    <button class="btn btn-primary" name="aksi" value="filter">Filter</button>
-                                    <button class="btn btn-warning" name="aksi" value="cetak">cetak <i class="fa fa-print"></i></button>
-                                </div>
-                            </form>
+
                             @if ($data->count() > 0)
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table-1">
@@ -60,7 +66,8 @@
                                                 <tr>
                                                     <td>{{ $loop->index += 1 }}</td>
                                                     <td>{{ $item->rencana_kegiatan }}</td>
-                                                    <td>Waktu Mulai : <strong>{{ $item->mulai}}</strong> | Waktu Berakhir <strong>{{$item->berakhir}}</strong></td>
+                                                    <td>Waktu Mulai : <strong>{{ $item->mulai }}</strong> | Waktu Berakhir
+                                                        <strong>{{ $item->berakhir }}</strong></td>
                                                     <td>{{ $item->created_at }}</td>
                                                     <td>
                                                         @if ($item->category == 'harian')
@@ -71,7 +78,8 @@
                                                     </td>
                                                     @if (Auth::guard('pamongs')->check())
                                                         <td>
-                                                            <form action="{{Route('logbook.update',$item->id)}}" class="mt-3" method="post">
+                                                            <form action="{{ Route('logbook.update', $item->id) }}"
+                                                                class="mt-3" method="post">
                                                                 @csrf
                                                                 @method('PUT')
                                                                 <select name="status" id="" class="form-control">

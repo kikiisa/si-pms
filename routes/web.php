@@ -11,6 +11,7 @@ use App\Http\Controllers\PamongController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RencanaKegiatanController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserControlller;
 
 /*
@@ -65,6 +66,7 @@ Route::prefix('/account')->group(function(){
     Route::resource('pamong',PamongController::class);
     Route::resource('dosen',DplController::class);
     Route::resource('logbook',LogbookController::class);
+    Route::resource('pengaturan',SettingController::class);
 });
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dpl;
+use App\Models\Pamong;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,11 +29,10 @@ class ProfileController extends Controller
             return view('backend.profile.mahasiswa');
         }elseif(Auth::guard('pamongs')->check())
         {
-            
-           
+            return view('backend.profile.pamong');
         }elseif(Auth::guard('dpls')->check())
         {
-           
+            return view('backend.profile.dpls');
         }else{
             
         }
@@ -165,10 +166,86 @@ class ProfileController extends Controller
            }
         }elseif(Auth::guard('pamongs')->check())
         {
-            
+            $pamong = Pamong::find(Auth::guard('pamongs')->user()->id);
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'username' => 'required',
+                'asal_sekolah' => 'required'
+            ]);
+            if($request->new != '')
+            {
+                $request->validate([
+                    'new'  => 'required|min:8',
+                    'confirm' => 'required|same:new'
+                ]);
+                $pamong->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'username' => $request->username,
+                    'asal_sekolah' => $request->asal_sekolah,
+                    'password' => bcrypt($request->new)
+                ]);
+                if($pamong)
+                {
+                    return redirect()->route('profile.index')->with('success','Berhasil');
+                }else{
+                    return redirect()->route('profile.index')->with('error','Gagal');
+                }
+            }else{
+                $pamong->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'username' => $request->username,
+                    'asal_sekolah' => $request->asal_sekolah
+                ]);
+                if($pamong)
+                {
+                    return redirect()->route('profile.index')->with('success','Berhasil');
+                }else{
+                    return redirect()->route('profile.index')->with('error','Gagal');
+                }
+            }
         }elseif(Auth::guard('dpls')->check())
         {
-           
+            $dpls = Dpl::find(Auth::guard('dpls')->user()->id);
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'username' => 'required',
+            ]);
+            if($request->new != '')
+            {
+                $request->validate([
+                    'new'  => 'required|min:8',
+                    'confirm' => 'required|same:new'
+                ]);
+                $dpls->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'username' => $request->username,
+                    'password' => bcrypt($request->new)
+                ]);
+                if($dpls)
+                {
+                    return redirect()->route('profile.index')->with('success','Berhasil');
+                }else{
+                    return redirect()->route('profile.index')->with('error','Gagal');
+                }
+            }else{
+                $dpls->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'username' => $request->username,
+                 
+                ]);
+                if($dpls)
+                {
+                    return redirect()->route('profile.index')->with('success','Berhasil');
+                }else{
+                    return redirect()->route('profile.index')->with('error','Gagal');
+                }
+            }
         }else{
             
         }

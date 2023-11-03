@@ -49,10 +49,12 @@ class LaporanController extends Controller
     }
     public function index()
     {
-        $user = ProgramKegiatan::with('user')->where('user_id', auth()->user()->id)->first();
-        $sisa_waktu = $this->duration->totalHari(Carbon::today(), $user->waktu_berakhir);
+
+        $user = ProgramKegiatan::with('user')->where('user_id', auth()->user()->id);
+        // $sisa_waktu = $this->duration->totalHari(Carbon::today(), $user->waktu_berakhir); 
         return view('backend.mahasiswa.report.index',[
-            'sisa_hari' => $sisa_waktu
+          'data' => $user,
+          'service' => $this->duration
         ]);
     }
 

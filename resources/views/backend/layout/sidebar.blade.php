@@ -32,19 +32,7 @@
         </ul>
     @endif
 
-    {{-- ini fitur untuk dpl --}}
-    @if (Auth::guard('dpls')->check())
-        @if (Auth::guard('dpls')->user()->roles == 'mk')
-           
-            
-        @endif
-       
-    @endif
-
-    {{-- ini fitur untuk pamong --}}
-    @if (Auth::guard('pamongs')->check())
-       
-    @endif
+   
 
     {{-- ini fitur untuk operator --}}
     @if (Auth::guard('operators')->check())
@@ -64,7 +52,7 @@
         </ul>    
         <ul class="sidebar-menu">
             <li><a class="nav-link"
-                    href="{{ Route('dashboard') }}"><i class="fa fa-wrench"></i> <span>Pengaturan</span></a></li>
+                    href="{{Route('pengaturan.index')}}"><i class="fa fa-wrench"></i> <span>Pengaturan</span></a></li>
         </ul>    
     @endif
 </aside>
