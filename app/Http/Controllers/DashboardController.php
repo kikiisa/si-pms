@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dpl;
 use App\Models\Pamong;
+use App\Models\Pengaturan;
 use App\Models\ProgramKegiatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,8 @@ class DashboardController extends Controller
     {
         if(Auth::check())
         {
-            return view('backend.dashboard.index');
+            $data = Pengaturan::all()->first();
+            return view('backend.dashboard.index',compact('data'));
         }elseif(Auth::guard('pamongs')->check())
         {
             
