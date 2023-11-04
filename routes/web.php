@@ -33,45 +33,51 @@ Route::get('/',[BerandaController::class,'index'])->name('home');
 Route::get('/auth',[AuthController::class,'index'])->name('auth');
 Route::post('/auth',[AuthController::class,'store'])->name('auth.store');
 Route::get('/logout',[AuthController::class,'destroy'])->name('auth.logout');
-
-
 Route::get('/registrasi',[RegisterController::class,'index'])->name('register');
 Route::post('/registrasi',[RegisterController::class,'store'])->name('register.store');
-
+Route::get('post/{id}',[InformasiController::class,'show'])->name('post.detail');
+    
 
 
 // ini halaman dashboard
 Route::prefix('/account')->group(function(){
     // halaman edit profile
-    Route::put('profile-update/{id}',[ProfileController::class,'profile'])->name('profile.image');
-    Route::resource('profile',ProfileController::class);
+    Route::middleware('allauth')->group(function(){
+        Route::put('profile-update/{id}',[ProfileController::class,'profile'])->name('profile.image');
+        Route::resource('profile',ProfileController::class);    
+        Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard')->middleware('allauth');
+        Route::put('status-rencana-kegiatan/{id}',[RencanaKegiatanController::class,'status'])->name('rencana_kegiatan.status');
+        Route::put('status_aktif/{id}',[UserControlller::class,'status'])->name('status');
+        Route::post('upload-pembagian',[RencanaKegiatanController::class,'upload_pembagian'])->name('upload_pembagian');
+        Route::put('upload-pembagian/{id}',[RencanaKegiatanController::class,'ubah_pembagian'])->name('upload_pembagian.update');
+        Route::put('tambah-catatan/{id}',[RencanaKegiatanController::class,'add_catatan'])->name("catatan");
+        Route::get('log-book/{id}',[LogbookController::class,'detailLogBook'])->name('detailLog');
+        Route::resource('mahasiswa',UserControlller::class);
+        Route::resource('logbook',LogbookController::class);
+    });
 
-    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
-
-    // halaman log book
-    Route::get('log-book',[LogbookController::class,'index'])->name('logbook');
-
-    // halaman Laporan
-    Route::get('laporan',[LaporanController::class,'index'])->name('laporan');
     
-    // halaman Rencana Kegiatan Mahasiswa
-    Route::put('status-rencana-kegiatan/{id}',[RencanaKegiatanController::class,'status'])->name('rencana_kegiatan.status');
-    Route::put('status_aktif/{id}',[UserControlller::class,'status'])->name('status');
-    Route::post('upload-pembagian',[RencanaKegiatanController::class,'upload_pembagian'])->name('upload_pembagian');
-    Route::put('upload-pembagian/{id}',[RencanaKegiatanController::class,'ubah_pembagian'])->name('upload_pembagian.update');
-    Route::put('tambah-catatan/{id}',[RencanaKegiatanController::class,'add_catatan'])->name("catatan");
-    Route::get('log-book/{id}',[LogbookController::class,'detailLogBook'])->name('detailLog');
-    Route::post('tambah-laporan',[LaporanController::class,'tambahLaporan'])->name('tambahLaporan');
 
-    Route::resource('mahasiswa',UserControlller::class);
-    Route::resource('rencana-kegiatan',RencanaKegiatanController::class);
-    Route::resource('pamong',PamongController::class);
-    Route::resource('dosen',DplController::class);
-    Route::resource('logbook',LogbookController::class);
-    Route::resource('pengaturan',SettingController::class);
-    Route::resource('operator',OperatorController::class);
-    Route::resource('post',InformasiController::class);
-    Route::get('post/{id}',[InformasiController::class,'show'])->name('post.detail');
+    
+    
+    
+    
+    // mahasiswa akses
+    Route::middleware('auth')->group(function(){
+        Route::get('log-book',[LogbookController::class,'index'])->name('logbook');
+        Route::get('laporan',[LaporanController::class,'index'])->name('laporan');
+        Route::post('tambah-laporan',[LaporanController::class,'tambahLaporan'])->name('tambahLaporan');
+        Route::resource('rencana-kegiatan',RencanaKegiatanController::class);
+    });
+
+    Route::middleware('operatorauth')->group(function(){
+        Route::resource('pamong',PamongController::class);
+        Route::resource('dosen',DplController::class);    
+        Route::resource('pengaturan',SettingController::class);
+        Route::resource('operator',OperatorController::class);
+        Route::resource('post',InformasiController::class);
+    });
+
 });
 
 

@@ -20,7 +20,7 @@ class BerandaController extends Controller
             $post = Informasi::paginate(5);
         }
         return view('frontend.beranda.index',[
-            'total_mahasiswa' => ProgramKegiatan::with('user')->where('status',1)->count(),
+            'total_mahasiswa' => ProgramKegiatan::with('user')->count(),
             'dpl' => Dpl::all()->count(),
             'pamongs' => Pamong::all()->count(),
             'app' => Pengaturan::all()->first(),

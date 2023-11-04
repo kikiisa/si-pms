@@ -93,4 +93,36 @@
             $('#sk_rektor').appendTo("body").modal('show');
         }
     </script>
+     <script src="{{ asset('vendor/modules/toastify/src/toastify.js') }}"></script>
+     @if (count($errors) > 0)
+         <script>
+             var errors = @json($errors->all());
+             Toastify({
+                 text: errors,
+                 duration: 3000,
+                 close: true,
+                 backgroundColor: "#D61355",
+             }).showToast();
+         </script>
+     @enderror
+     @if (session()->has('success'))
+         <script>
+             Toastify({
+                 text: "{{ session('success') }}",
+                 duration: 3000,
+                 close: true,
+                 backgroundColor: "#19C37D",
+             }).showToast();
+         </script>
+     @endif
+     @if (session()->has('error'))
+         <script>
+             Toastify({
+                 text: "{{ session('error') }}",
+                 duration: 3000,
+                 close: true,
+                 backgroundColor: "#D61355",
+             }).showToast();
+         </script>
+     @endif
 @endsection
