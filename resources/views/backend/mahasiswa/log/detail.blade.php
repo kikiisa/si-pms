@@ -13,7 +13,7 @@
                             <div class="content mt-3 mb-3">
                                 {!! $data->deskripsi !!}
                             </div>
-                            <a href="{{Route('logbook.index')}}" class="btn btn-primary">Kembali</a>
+                            <a href="{{Route('mahasiswa.index')}}" class="btn btn-primary">Kembali</a>
                             @if ($data->status == 0)
                             <td><span class="text-light badge bg-warning">Dalam Peninjauan</span></td>
                             @endif
