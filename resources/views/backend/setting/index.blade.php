@@ -40,6 +40,7 @@
                                 </div>
                                 <button class="btn btn-primary">simpan</button>
                             </form>
+                            
                         </div>
                     </div>
                 </div>

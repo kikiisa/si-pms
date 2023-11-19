@@ -7,9 +7,9 @@
         <div class="section-body">
             <div class="row justify-content-center">
                 <div class="col-lg-4">
-                    @isset($record->image)
+                    @if($data->image != "")
                         <div class="card rounded-circle">
-                            <img src="{{ asset('storage/profile/' . $data->image) }}" class="card-img-top" alt=""
+                            <img src="{{ asset($data->image) }}" class="card-img-top" alt=""
                                 srcset="">
 
                         </div>
@@ -86,10 +86,14 @@
 
 
                                                 <td>
-                                                    <a href="javascript:void()" onclick="return laporanAkhir()"
-                                                        class="btn btn-primary">Lihat Laporan Akhir</a>
-                                                    <a href="javascript:void()" onclick="return laporanUmum()"
-                                                        class="btn btn-outline-primary">Lihat Laporan Umum</a>
+                                                    @if ($program->status == 0)
+                                                        <div class="badge bg-danger text-white">Belum Di Verifikasi Pamong</div>
+                                                    @else
+                                                        <a href="javascript:void()" onclick="return laporanAkhir()"
+                                                            class="btn btn-primary">Lihat Laporan Akhir</a>
+                                                        <a href="javascript:void()" onclick="return laporanUmum()"
+                                                            class="btn btn-outline-primary">Lihat Laporan Umum</a>
+                                                    @endif
                                                     <a href="javascript:void()" onclick="return showCatatan()"
                                                         class="btn btn-success">Lihat Catatan</a>
                                                     <a href="javascript:void()" onclick="return openPDFRencanaKegiatan()"
@@ -110,7 +114,6 @@
                         </div>
                     </div>
                 @endisset
-
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
