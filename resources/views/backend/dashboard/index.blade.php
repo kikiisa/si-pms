@@ -7,17 +7,6 @@
         @if (Auth::check())
             <div class="section-body">
                 <div class="row">
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <button class="btn btn-primary" onclick="return sk_rektor()"><i class="fa fa-download"></i> SK REKTOR</button>
-                                <a href="{{asset($data->surat_pernyataan)}}" class="btn btn-success"><i class="fa fa-download"></i> SURAT PERNYATAAN</a>
-                                <button class="btn btn-outline-dark"><i class="fa fa-download"></i> PEDOMAN PMS</button>
-                            </div>
-                        </div>    
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-3">
                         @isset(Auth::user()->profile)
                             <div class="card">

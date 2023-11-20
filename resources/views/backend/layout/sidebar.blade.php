@@ -52,11 +52,15 @@
         </ul>    
         <ul class="sidebar-menu">
             <li class="{{ Route::current()->getName() == 'post.index' ? 'active' : '' }}"><a class="nav-link"
-                    href="{{ Route('post.index') }}"><i class="fa fa-pen"></i> <span>Post</span></a></li>
+                    href="{{ Route('post.index') }}"><i class="fa fa-envelope"></i> <span>Papan Informasi</span></a></li>
         </ul>    
         <ul class="sidebar-menu">
-            <li class="{{ Route::current()->getName() == 'dosen.index' ? 'active' : '' }}"><a class="nav-link"
+            <li class="{{ Route::current()->getName() == 'pengaturan.index' ? 'active' : '' }}"><a class="nav-link"
                     href="{{Route('pengaturan.index')}}"><i class="fa fa-wrench"></i> <span>Pengaturan</span></a></li>
+        </ul>    
+        <ul class="sidebar-menu">
+            <li class="{{ Route::current()->getName() == 'berita.index' ? 'active' : '' }}"><a class="nav-link"
+                    href="{{Route('berita.index')}}"><i class="fa fa-pen"></i> <span>Berita</span></a></li>
         </ul>    
     @endif
 </aside>

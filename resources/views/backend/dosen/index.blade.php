@@ -50,7 +50,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Tambah Pamong</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Dosen</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -76,7 +76,7 @@
                                 <select name="roles" id="roles" class="form-control">
                                     <option value="">Pilih Kategori Dosen</option>
                                     <option value="mk">Dosen Mata Kuliah</option>
-                                    <option value="dpl">Dosen DPL</option>
+                                    <option value="dpl">Dosen Pembimbing Lapangan</option>
                                 </select>
                             </div>
                             <div class="form-group">

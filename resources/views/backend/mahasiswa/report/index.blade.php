@@ -10,7 +10,7 @@
                     <div class="card">
                         <div class="card-body">
                         @if($data->count() > 0)
-                            @if (empty($data->first()->status == 0))
+                            @if ($data->first()->status == 0)
                                 <div class="p-4 bg-danger text-center text-light">Maaf Program Kegiatan Anda Belum Di Setujui Oleh Pamong</div>     
                             @else
                                 <form action="{{Route('tambahLaporan')}}" method="post" enctype="multipart/form-data">

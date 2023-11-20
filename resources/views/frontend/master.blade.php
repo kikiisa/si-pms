@@ -50,6 +50,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-light fw-bold" id="scrollInformasi" href="#informasi">Informasi</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light fw-bold" id="scrollInformasi" href="#informasi">Berita</a>
+                    </li>
                     @if (Auth::guard('operators')->check() || Auth::guard('dpls')->check() || Auth::guard('pamongs')->check() || Auth::check())
                         <a href="{{route('dashboard')}}" class="btn btn-light rounded-2 ms-3">
                             <span>Dashboard</span><i class="fa fa-arrow-right ms-2"></i>
@@ -90,9 +93,13 @@
                     <p><a class="social" href="#"><i class="fa-brands fa-youtube"></i></a><span
                             class="ms-2">Youtube</span></p>
                 </div>
-                <div class="col-12 text-light text-center">
-                    @copyright Alwin Manapu 2023
+                <div class="col-lg-4">
+                    <h4 class="text-light">Maps</h4>
+                    <div class="card border-0">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63833.58990190094!2d123.00039768218996!3d0.6002566680890935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32792cd61bd05eeb%3A0x7aedffc6676ca051!2sDinas%20Perhubungan%2C%20Pariwisata%2C%20dan%20Kominfo%20Provinsi%20Gorontalo!5e0!3m2!1sen!2sid!4v1699704738996!5m2!1sen!2sid" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
                 </div>
+                <p class="text-center text-light  mt-4">Copyright {{date('Y')}} <span class="text-warning fw-bold">FakultasTeknik Universitas Negeri Gorontalo</span>. All Rights Reserved</p>
             </div>
         </div>
     </footer>

@@ -19,8 +19,13 @@ return new class extends Migration
             $table->string('judul');
             $table->string('sub_judul');
             $table->text('deskripsi_full');
-            $table->string('sk_rektor');
-            $table->string('surat_pernyataan');
+        
+            $table->string('sk_rektor')->nullable();
+            $table->string('surat_pernyataan')->nullable();
+            $table->string('petunjuk')->nullable();
+            $table->string('format_rancangan')->nullable();
+            $table->string('format_laporan_akhir')->nullable();
+            $table->string('format_laporan_mata_kuliah')->nullable();
             $table->timestamps();
         });
     }

@@ -128,6 +128,79 @@ class SettingController extends Controller
             }else{
                 return redirect()->back()->with('error','Gagal Mengubah Data');
             }
+        }elseif($request->hasFile('petunjuk'))
+        {
+            $request->validate([
+                'petunjuk' => 'required|mimes:pdf',
+            ]);
+            File::delete($data->petunjuk);
+            $data->update([
+                'title' => $request->title,
+                'judul' => $request->judul,
+                'sub_judul' => $request->sub_judul,
+                'deskripsi_full' => $request->deskripsi_full,
+                'petunjuk' => $this->service->upload('petunjuk',$this->path),
+            ]);
+            if($data)
+            {
+                return redirect()->back()->with('success','Berhasil Mengubah Data');
+            }else{
+                return redirect()->back()->with('error','Gagal Mengubah Data');
+            }  
+        }elseif($request->hasFile('format_rancangan')){
+            $request->validate([
+                'format_rancangan' => 'required|mimes:docx',
+            ]);
+            File::delete($data->petunjuk);
+            $data->update([
+                'title' => $request->title,
+                'judul' => $request->judul,
+                'sub_judul' => $request->sub_judul,
+                'deskripsi_full' => $request->deskripsi_full,
+                'format_rancangan' => $this->service->upload('format_rancangan',$this->path),
+            ]);
+            if($data)
+            {
+                return redirect()->back()->with('success','Berhasil Mengubah Data');
+            }else{
+                return redirect()->back()->with('error','Gagal Mengubah Data');
+            }  
+        }elseif($request->hasFile('format_laporan_akhir')){
+            $request->validate([
+                'format_laporan_akhir' => 'required|mimes:docx',
+            ]);
+            File::delete($data->petunjuk);
+            $data->update([
+                'title' => $request->title,
+                'judul' => $request->judul,
+                'sub_judul' => $request->sub_judul,
+                'deskripsi_full' => $request->deskripsi_full,
+                'format_laporan_akhir' => $this->service->upload('format_laporan_akhir',$this->path),
+            ]);
+            if($data)
+            {
+                return redirect()->back()->with('success','Berhasil Mengubah Data');
+            }else{
+                return redirect()->back()->with('error','Gagal Mengubah Data');
+            }  
+        }elseif($request->hasFile('format_laporan_mata_kuliah')){
+            $request->validate([
+                'format_laporan_mata_kuliah' => 'required|mimes:docx',
+            ]);
+            File::delete($data->petunjuk);
+            $data->update([
+                'title' => $request->title,
+                'judul' => $request->judul,
+                'sub_judul' => $request->sub_judul,
+                'deskripsi_full' => $request->deskripsi_full,
+                'format_laporan_mata_kuliah' => $this->service->upload('format_laporan_mata_kuliah',$this->path),
+            ]);
+            if($data)
+            {
+                return redirect()->back()->with('success','Berhasil Mengubah Data');
+            }else{
+                return redirect()->back()->with('error','Gagal Mengubah Data');
+            }  
         }elseif($request->hasFile('surat_pernyataan'))
         {
             $request->validate([

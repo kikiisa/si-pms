@@ -9,18 +9,17 @@
                 <div class="col-lg-4">
                     @if($data->image != "")
                         <div class="card rounded-circle">
-                            <img src="{{ asset($data->image) }}" class="card-img-top" alt=""
-                                srcset="">
+                            <img src="{{ asset('vendor/img/avatar/avatar-1.png') }}"alt="" class="card-img-top" srcset="">
 
                         </div>
                     @else
                         <div class="card rounded-circle">
-                            <img src="{{ asset('vendor/img/avatar/avatar-1.png') }}"alt="" class="card-img-top" srcset="">
-
+                            <img src="{{ asset($data->profile) }}" class="card-img-top" alt=""
+                            srcset="">
                         </div>
                     @endisset
                 </div>
-                <div class="col-lg-12">
+                <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">

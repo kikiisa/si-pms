@@ -6,6 +6,7 @@ use App\Models\Dpl;
 use App\Models\Informasi;
 use App\Models\Pamong;
 use App\Models\Pengaturan;
+use App\Models\Post;
 use App\Models\ProgramKegiatan;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,8 @@ class BerandaController extends Controller
             'pamongs' => Pamong::all()->count(),
             'app' => Pengaturan::all()->first(),
             'post' => $post,
+            'berita' => Post::paginate(5),
+            'pengaturan' => Pengaturan::all()->first()
         ]);
     }
 }

@@ -13,29 +13,50 @@
                                 @csrf
                                 @method("PUT")
                                 <div class="form-group">
-                                    <label for="">Judul Aplikasi</label>
-                                    <input type="text" value="{{ $data->title}}" name="title" placeholder="Judul Aplikasi" id="" class="form-control">
+                                    <label>Judul Aplikasi</label>
+                                    <input type="text" value="{{ $data->title}}" name="title" placeholder="Judul Aplikasi" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Hero Title</label>
-                                    <input type="text" name="judul" value="{{ $data->judul}}" placeholder="Hero Title" id="" class="form-control">
+                                    <label>Hero Title</label>
+                                    <input type="text" name="judul" value="{{ $data->judul}}" placeholder="Hero Title" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Deskripsi Hero Title</label>
-                                    <input type="text" value="{{ $data->sub_judul}}" name="sub_judul" placeholder="Hero Title" id="" class="form-control">
+                                    <label>Deskripsi Hero Title</label>
+                                    <input type="text" value="{{ $data->sub_judul}}" name="sub_judul" placeholder="Hero Title" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Deskripsi Full</label>
+                                    <label>Deskripsi Full</label>
                                     <textarea name="deskripsi_full" id="deskripsi" cols="30" rows="10">{{ $data->deskripsi_full }}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="">File SK REKTOR</label>
-                                    <input type="file" name="sk_rektor" id="" class="form-control-file">
+                                    <label>File SK REKTOR</label>
+                                    <input type="file" name="sk_rektor" class="form-control-file">
                                     <small class="text-info mt-2">File : PDF</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="">File Surat Pertanyaan</label>
-                                    <input type="file" name="surat_pernyataan" id="" class="form-control-file">
+                                    <label>Petunjuk Teknis Pelaksanaan Kegiatan PMS MBKM</label>
+                                    <input type="file" name="petunjuk" class="form-control-file">
+                                    <small class="text-info mt-2">File : PDF</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>File Surat Pertanyaan</label>
+                                    <input type="file" name="surat_pernyataan" class="form-control-file">
+                                    <small class="text-info mt-2">File : DOCX</small>
+                                </div>
+                              
+                                <div class="form-group">
+                                    <label>Format Laporan Akhir Program PMS</label>
+                                    <input type="file" name="format_laporan_akhir" class="form-control-file">
+                                    <small class="text-info mt-2">File : DOCX</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Format Laporan Mata Kuliah</label>
+                                    <input type="file" name="format_laporan_mata_kuliah" class="form-control-file">
+                                    <small class="text-info mt-2">File : DOCX</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Format Rancangan Kegiatan</label>
+                                    <input type="file" name="format_rancangan" class="form-control-file">
                                     <small class="text-info mt-2">File : DOCX</small>
                                 </div>
                                 <button class="btn btn-primary">simpan</button>

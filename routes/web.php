@@ -10,6 +10,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LogbookController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PamongController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RencanaKegiatanController;
@@ -36,7 +37,7 @@ Route::get('/logout',[AuthController::class,'destroy'])->name('auth.logout');
 Route::get('/registrasi',[RegisterController::class,'index'])->name('register');
 Route::post('/registrasi',[RegisterController::class,'store'])->name('register.store');
 Route::get('post/{id}',[InformasiController::class,'show'])->name('post.detail');
-    
+Route::get('/berita/{id}',[PostController::class,'show'])->name('berita.detail');
 
 
 // ini halaman dashboard
@@ -76,6 +77,7 @@ Route::prefix('/account')->group(function(){
         Route::resource('pengaturan',SettingController::class);
         Route::resource('operator',OperatorController::class);
         Route::resource('post',InformasiController::class);
+        Route::resource('berita',PostController::class);
     });
 
 });
