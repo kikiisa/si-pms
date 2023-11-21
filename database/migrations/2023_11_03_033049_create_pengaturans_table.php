@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('judul');
             $table->string('sub_judul');
             $table->text('deskripsi_full');
-        
             $table->string('sk_rektor')->nullable();
             $table->string('surat_pernyataan')->nullable();
             $table->string('petunjuk')->nullable();

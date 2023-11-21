@@ -2,11 +2,28 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Laporan Akhir Dan Umum</h1>
+            <h1>Laporan Individu,Umum Dan Mata Kuliah</h1>
         </div>
         <div class="section-body">
             <div class="row">
-                <div class="col-lg-8">
+                @if($data->count() > 0)
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="{{Route('uploadLaporanMk')}}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                @method("PUT")
+                                <div class="form-group">
+                                    <label for="laporan">Upload Laporan Mata Kuliah</label>
+                                    <input type="file" name="laporan_mk" id="laporan" class="form-control-file">
+                                </div>
+                                <button class="btn btn-primary">Simpan</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
                         @if($data->count() > 0)
@@ -35,7 +52,7 @@
                                 </form>
                             @endif
                         @else
-                            <div class="p-4 bg-danger text-center text-light">Maaf Belum Mendapatlan Pamong Dan DPL</div>    
+                            <div class="p-4 bg-danger text-center text-light w-100">Maaf Belum Mendapatlan Pamong Dan DPL</div>    
                         @endempty
                         </div>
                     </div>

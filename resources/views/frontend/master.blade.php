@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{{ asset('theme/vendor/fontawesome/css/regular.min.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendor/fontawesome/css/fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/style.css')}}">
-    <title>Universitas Negeri Gorontalo | MBMKM Merdeka Belajar</title>
+    <title>{{$app->title}}</title>
 </head>
 
 <body>
@@ -77,7 +77,7 @@
             <div class="row p-4">
                 <div class="col-lg-6 mb-4">
                     <h1 class="fw-bold text-light">SI-PMS</h1>
-                    <p class="text-light">Merupakan aplikasi berbasis web yang bertujuan untuk membantu pengelolaan Kegiatan Program Mengajar di Sekolah dI Prodi Pendidiken Teknologi Informasi Universitas Negeri Gorontalo.</p>
+                    <p class="text-light">{{$app->sub_judul}}</p>
                     <img src="{{asset('theme/images/mbkm.png')}}" width="100" alt="" srcset="">
                     <img src="{{asset('theme/images/ung.png')}}" class="ms-3" width="60" alt="" srcset="">
                 </div>

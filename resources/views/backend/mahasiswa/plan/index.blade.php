@@ -67,43 +67,44 @@
                                 <tbody>
 
                                     @php
-                                                $service = app('App\Services\DurasiService');
-                                            @endphp
-                                            <tr>
-                                                <td>{{ $program->pamongs->name }}</td>
-                                                <td>{{ $program->dpls->name }}</td>
-                                                <td>{{ $program->waktu_mulai }}</td>
-                                                <td>{{ $program->waktu_berakhir }}</td>
-                                                <td>{{ $service->totalHari($program->waktu_mulai, $program->waktu_berakhir) }}
-                                                    Hari</td>
-                                                <td>{{ $service->totalHari(\Carbon\Carbon::today(), $program->waktu_berakhir) }}
-                                                    Hari</td>
-                                                <td>
-                                                    @if (Auth::guard('pamongs')->check())
-                                                        <form action="{{Route('rencana_kegiatan.status', $program->id)}}" method="post">
-                                                            @csrf
-                                                            @method("PUT")
-                                                            @if ($program->status == 0)
-                                                                <button class="btn btn-danger" name="status" value="1"
-                                                                     onclick="return confirm('Apakah anda yakin ingin menyetujui laporan akhir dan umum')">Belum
-                                                                    Di Setujui</button>
-                                                            @else
-                                                                <button class="btn btn-success" value="0"
-                                                                    name="status" onclick="return confirm('Apakah anda yakin ingin mengubah status ini ?')">Di
-                                                                    Setujui</button>
-                                                            @endif
-                                                        </form>
+                                        $service = app('App\Services\DurasiService');
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $program->pamongs->name }}</td>
+                                        <td>{{ $program->dpls->name }}</td>
+                                        <td>{{ $program->waktu_mulai }}</td>
+                                        <td>{{ $program->waktu_berakhir }}</td>
+                                        <td>{{ $service->totalHari($program->waktu_mulai, $program->waktu_berakhir) }}
+                                            Hari</td>
+                                        <td>{{ $service->totalHari(\Carbon\Carbon::today(), $program->waktu_berakhir) }}
+                                            Hari</td>
+                                        <td>
+                                            @if (Auth::guard('pamongs')->check())
+                                                <form action="{{ Route('rencana_kegiatan.status', $program->id) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    @if ($program->status == 0)
+                                                        <button class="btn btn-danger" name="status" value="1"
+                                                            onclick="return confirm('Apakah anda yakin ingin menyetujui laporan akhir dan umum')">Belum
+                                                            Di Setujui</button>
                                                     @else
-                                                        @if ($program->status == 0)
-                                                            <button class="btn btn-danger">Belum
-                                                                Di Setujui</button>
-                                                        @else
-                                                            <button class="btn btn-success">Di
-                                                                Setujui</button>
-                                                        @endif
+                                                        <button class="btn btn-success" value="0" name="status"
+                                                            onclick="return confirm('Apakah anda yakin ingin mengubah status ini ?')">Di
+                                                            Setujui</button>
                                                     @endif
-                                                </td>
-                                            </tr>
+                                                </form>
+                                            @else
+                                                @if ($program->status == 0)
+                                                    <button class="btn btn-danger">Belum
+                                                        Di Setujui</button>
+                                                @else
+                                                    <button class="btn btn-success">Di
+                                                        Setujui</button>
+                                                @endif
+                                            @endif
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -136,11 +137,17 @@
                                                             </td>
                                                         @endif
                                                         <td>
-                                                            <a href="javascript:void()" onclick="return laporanAkhir()" class="btn btn-primary">Lihat Laporan Akhir</a>
-                                                            <a href="javascript:void()" onclick="return laporanUmum()" class="btn btn-outline-primary">Lihat Laporan
+                                                            <a href="javascript:void()" onclick="return laporanAkhir()"
+                                                                class="btn btn-primary">Lihat Laporan Akhir</a>
+                                                            <a href="javascript:void()" onclick="return laporanUmum()"
+                                                                class="btn btn-outline-primary">Lihat Laporan
                                                                 Umum</a>
-                                                            <a onclick="return tambahCatatan()" href="javascript:void()" class="btn btn-success">Lihat Catatan</a>
-                                                            <a href="javascript:void()" onclick="return rencanaKegiatan()" class="btn btn-success">Lihat File Rencana
+                                                            <a href="javascript:void()" class="btn btn-dark"
+                                                                onclick="return showLaporanMk()">Lihat Laporan Mata Kuliah</a>
+                                                            <a onclick="return tambahCatatan()" href="javascript:void()"
+                                                                class="btn btn-success">Lihat Catatan</a>
+                                                            <a href="javascript:void()" onclick="return rencanaKegiatan()"
+                                                                class="btn btn-success">Lihat File Rencana
                                                                 Kegiatan</a>
                                                         </td>
                                                     </tr>
@@ -169,9 +176,9 @@
                     </div>
                     <div class="modal-body">
                         @isset($program->catatan)
-                        {!! $program->catatan !!}
+                            {!! $program->catatan !!}
                         @else
-                        <div class="alert alert-danger fw-bold">Belum Ada Catatan Dari Dosen MK</div>    
+                            <div class="alert alert-danger fw-bold">Belum Ada Catatan Dari Dosen MK</div>
                         @endisset
                     </div>
                     <div class="modal-footer">
@@ -180,7 +187,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="laporan_akhir" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="laporan_akhir" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -191,9 +199,9 @@
                     </div>
                     <div class="modal-body">
                         @isset($program->laporan_akhir)
-                        <iframe src="{{asset($program->laporan_akhir)}}" width="100%" height="600px"></iframe>
+                            <iframe src="{{ asset($program->laporan_akhir) }}" width="100%" height="600px"></iframe>
                         @else
-                        <div class="alert alert-danger fw-bold">Anda Belum Mengupload Laporan Akhir</div>    
+                            <div class="alert alert-danger fw-bold">Anda Belum Mengupload Laporan Akhir</div>
                         @endisset
                     </div>
                     <div class="modal-footer">
@@ -202,7 +210,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="rencana_kegiatan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="rencana_kegiatan" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -213,9 +222,9 @@
                     </div>
                     <div class="modal-body">
                         @isset($program->rencana_kegiatan)
-                        <iframe src="{{asset($program->rencana_kegiatan)}}" width="100%" height="600px"></iframe>
+                            <iframe src="{{ asset($program->rencana_kegiatan) }}" width="100%" height="600px"></iframe>
                         @else
-                        <div class="alert alert-danger fw-bold">Anda Belum Mengupload Rencana Kegiatan</div>    
+                            <div class="alert alert-danger fw-bold">Anda Belum Mengupload Rencana Kegiatan</div>
                         @endisset
                     </div>
                     <div class="modal-footer">
@@ -224,7 +233,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="laporan_umum" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="laporan_umum" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -235,9 +245,9 @@
                     </div>
                     <div class="modal-body">
                         @isset($program->laporan_umum)
-                        <iframe src="{{asset($program->laporan_umum)}}" width="100%" height="600px"></iframe>
+                            <iframe src="{{ asset($program->laporan_umum) }}" width="100%" height="600px"></iframe>
                         @else
-                        <div class="alert alert-danger fw-bold">Anda Belum Mengupload Laporan Umum</div>    
+                            <div class="alert alert-danger fw-bold">Anda Belum Mengupload Laporan Umum</div>
                         @endisset
                     </div>
                     <div class="modal-footer">
@@ -246,7 +256,30 @@
                 </div>
             </div>
         </div>
-        
+        <div class="modal fade" id="show_laporan_mk" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Lihat File Laporan MK</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        @isset($program->laporan_mk)
+                            <iframe src="{{ asset($program->laporan_mk) }}" width="100%" height="600px"></iframe>
+                        @else
+                            <div class="alert alert-danger">Belum Mengupload File Laporan Mata Kuliah</div>
+                        @endisset
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <script>
         const tambahCatatan = () => {
@@ -260,6 +293,9 @@
         }
         const laporanUmum = () => {
             $('#laporan_umum').appendTo("body").modal('show');
+        }
+        const showLaporanMk = () => {
+            $('#show_laporan_mk').appendTo("body").modal('show');
         }
     </script>
     <script src="{{ asset('vendor/modules/toastify/src/toastify.js') }}"></script>

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('rencana_kegiatan')->nullable();
             $table->string('laporan_umum')->nullable();
             $table->string('laporan_akhir')->nullable();
+            $table->string('laporan_mk')->nullable();
             $table->text('catatan')->nullable();
             $table->date('waktu_mulai');
             $table->date('waktu_berakhir');

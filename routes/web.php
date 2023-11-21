@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DplController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LogbookController;
@@ -39,6 +40,11 @@ Route::post('/registrasi',[RegisterController::class,'store'])->name('register.s
 Route::get('post/{id}',[InformasiController::class,'show'])->name('post.detail');
 Route::get('/berita/{id}',[PostController::class,'show'])->name('berita.detail');
 
+Route::get('/forgot-password',[ForgotPasswordController::class,'index'])->name('forgotPassword');
+Route::post('/forgot-password',[ForgotPasswordController::class,'store'])->name('forgotPassword.store');
+Route::get('/reset-password/{token}',[ForgotPasswordController::class,'resetPassword'])->name('password.reset');
+Route::post('/reset-password',[ForgotPasswordController::class,'updatePassword'])->name('passwordReset');
+
 
 // ini halaman dashboard
 Route::prefix('/account')->group(function(){
@@ -55,6 +61,8 @@ Route::prefix('/account')->group(function(){
         Route::get('log-book/{id}',[LogbookController::class,'detailLogBook'])->name('detailLog');
         Route::resource('mahasiswa',UserControlller::class);
         Route::resource('logbook',LogbookController::class);
+
+        Route::put('/upload-mk',[LaporanController::class,'uploadLaporanMk'])->name('uploadLaporanMk');
     });
 
     
