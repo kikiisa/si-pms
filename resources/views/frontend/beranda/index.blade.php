@@ -1,20 +1,71 @@
 @extends('frontend.master')
 @section('content')
     <!-- hero -->
-    <section class="hero-bg shadow rounded-bottom-4 shadow">
+    <style>
+        .click{
+            cursor: pointer;
+        }
+    </style>
+    <section class="mt-4">
         <div class="container">
             <div class="row d-flex justify-content-start">
-                <div class="col-lg-6">
-                    <h1 class="fw-bolder text-light mt-4">{{ $app->judul }}</h1>
-                    <p class="text-light">{{ $app->sub_judul }}</p>
-                    <button onclick="return movePageRegis()" class="btn btn-light custom-button fw-bold shadow mb-3"><span
-                            class="ms-2">Daftar
-                            Sekarang</span></button>
-                </div>
+                @if ($berita->count() > 0)
+                    <section class="slider container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12 rounded-4">
+                               
+                                <div class="card border-0">
+                                    <div id="carouselExampleDark" class="carousel carousel-dark slide">
+                                        <div class="carousel-indicators">
+                                            <button type="button" data-bs-target="#carouselExampleDark"
+                                                data-bs-slide-to="0" class="active" aria-current="true"
+                                                aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#carouselExampleDark"
+                                                data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button type="button" data-bs-target="#carouselExampleDark"
+                                                data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                        </div>
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active click" onclick="location.href='{{ route('berita.detail', $berita[0]->slug) }}'" data-bs-interval="10000">
+                                                <img src="{{ asset($berita[0]->image) }}"
+                                                    class="d-block w-100">
 
-                <div class="col-lg-6">
-                    <img src="{{ asset('theme/images/bg.png') }}" class="responsive-img" alt="" srcset="">
-                </div>
+                                            </div>
+                                            @foreach ($berita as $sl)
+                                                <div class="carousel-item click" onclick="location.href='{{ route('berita.detail', $sl->slug) }}'"">
+                                                    <img src="{{ asset($sl->image) }}"
+                                                        class="d-block w-100">
+
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                @else
+                    <section class="slider container mb-4">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7 col-md-7 col-12">
+                                <div class="bg-danger p-4 rounded-4 text-light fw-bold text-center">
+                                    Maaf Data Post Terbaru Belum Tersedia
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                @endif
             </div>
         </div>
     </section>
@@ -22,24 +73,33 @@
     {{-- postingan --}}
     <section class="py-4">
         <div class="container mt-4">
-            <div class="row justify-content-start text-start mb-4">
-                <h1 class="text-center fw-bold mb-4">Berita Terbaru</h1>
-                @foreach ($berita as $news)
-                    <div class="col-lg-4">
-                        <div class="card border-0">
-                            <img src="{{ asset($news->image) }}" class="card-img-top" alt="{{ $news->title }}"
-                                srcset="">
-                            <div class="card-body">
-                                <p class="fw-bold fs-5">{{ $news->title }}</p>
-                                <p class="text-muted">{{ \Carbon\Carbon::parse($news->created_at)->format('l / d / Y') }}
-                                </p>
-                                <a href="{{ Route('berita.detail', $news->slug) }}" class="btn btn-primary mt-2">Lihat
-                                    Berita</a>
+            <div class="row justify-content-center text-start mb-4">
+                <h1 class="text-center fw-bold mb-4">Berita</h1>
+                @if ($berita->count() > 0)
+                    @foreach ($berita as $news)
+                        <div class="col-lg-4">
+                            <div class="card border-0">
+                                <img src="{{ asset($news->image) }}" class="card-img-top" alt="{{ $news->title }}"
+                                    srcset="">
+                                <div class="card-body">
+                                    <p class="fw-bold fs-5">{{ $news->title }}</p>
+                                    <p class="text-muted">
+                                        {{ \Carbon\Carbon::parse($news->created_at)->format('l / d / Y') }}
+                                    </p>
+                                    <a href="{{ Route('berita.detail', $news->slug) }}" class="btn btn-primary mt-2">Lihat
+                                        Berita</a>
+                                </div>
                             </div>
                         </div>
+                    @endforeach
+                    {{ $berita->links() }}
+                @else
+                    <div class="col-lg-4">
+                        <div class="bg-danger p-4 rounded-4 text-white text-center">
+                            Tidak ada berita tersedia
+                        </div>
                     </div>
-                @endforeach
-                {{ $berita->links() }}
+                @endif
             </div>
         </div>
     </section>
@@ -88,15 +148,17 @@
                                     <hr>
                                     <div class="table-responsive w-100">
                                         @if ($post->count() < 0))
-                                            <div class="p-4 bg-danger rounded-4 text-white text-center fw-bold">Belum Ada Informasi
+                                            <div class="p-4 bg-danger rounded-4 text-white text-center fw-bold">Belum Ada
+                                                Informasi
                                             </div>
                                         @else
                                             <form method="get">
                                                 <div class="input-group mb-3">
                                                     <button class="btn btn-dark input-group-text" id="basic-addon1"><i
                                                             class="fa fa-search"></i></button>
-                                                    <input name="post" type="text" class="form-control" placeholder="Search"
-                                                        aria-label="search" aria-describedby="basic-addon1">
+                                                    <input name="post" type="text" class="form-control"
+                                                        placeholder="Search" aria-label="search"
+                                                        aria-describedby="basic-addon1">
                                                 </div>
                                             </form>
                                             <table class="table table-hover">
@@ -104,7 +166,7 @@
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Judul Informasi</th>
-        
+
                                                         <th>Detail</th>
                                                     </tr>
                                                 </thead>
@@ -113,7 +175,7 @@
                                                         <tr>
                                                             <td>{{ $loop->index += 1 }}</td>
                                                             <td>{{ $item->title }}</td>
-        
+
                                                             <td><a href="{{ Route('post.detail', $item->slug) }}"
                                                                     class="btn btn-dark">Detail</a></td>
                                                         </tr>
@@ -122,48 +184,54 @@
                                             </table>
                                             {{ $post->links() }}
                                         @endempty
-                                    </div>
                                 </div>
-                                <div class="col-lg-4">
-                                    <h3 class="fw-bold">Download File</h3>
-                                    <hr>
-                                    <table class="table">
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <td>Petunjuk Teknis Pelaksanaan Kegiatan PMS MBKM</td>
-                                            <td><a href="{{asset($pengaturan->petunjuk)}}" class="btn btn-primary"><i class="fa fa-download"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>SK Rektor tentang Panitia, DPL, Kepsek dan Guru Pamong PMS </td>
-                                            <td><a href="{{asset($pengaturan->sk_rektor)}}" class="btn btn-primary"><i class="fa fa-download"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Format Rancangan Kegiatan</td>
-                                            <td><a href="{{asset($pengaturan->format_rancangan)}}" class="btn btn-primary"><i class="fa fa-download"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Format Laporan Akhir Program PMS</td>
-                                            <td><a href="{{asset($pengaturan->format_laporan_akhir)}}" class="btn btn-primary"><i class="fa fa-download"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Format Laporan Mata Kuliah</td>
-                                            <td><a href="{{asset($pengaturan->format_laporan_mata_kuliah)}}" class="btn btn-primary"><i class="fa fa-download"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Surat Pernyataan</td>
-                                            <td><a href="{{asset($pengaturan->surat_pernyataan)}}" class="btn btn-primary"><i class="fa fa-download"></i></a></td>
-                                        </tr>
-                                    </table>
-                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <h3 class="fw-bold">Download File</h3>
+                                <hr>
+                                <table class="table">
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td>Petunjuk Teknis Pelaksanaan Kegiatan PMS MBKM</td>
+                                        <td><a href="{{ asset($pengaturan->petunjuk) }}" class="btn btn-primary"><i
+                                                    class="fa fa-download"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>SK Rektor tentang Panitia, DPL, Kepsek dan Guru Pamong PMS </td>
+                                        <td><a href="{{ asset($pengaturan->sk_rektor) }}" class="btn btn-primary"><i
+                                                    class="fa fa-download"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Format Rancangan Kegiatan</td>
+                                        <td><a href="{{ asset($pengaturan->format_rancangan) }}"
+                                                class="btn btn-primary"><i class="fa fa-download"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Format Laporan Akhir Program PMS</td>
+                                        <td><a href="{{ asset($pengaturan->format_laporan_akhir) }}"
+                                                class="btn btn-primary"><i class="fa fa-download"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Format Laporan Mata Kuliah</td>
+                                        <td><a href="{{ asset($pengaturan->format_laporan_mata_kuliah) }}"
+                                                class="btn btn-primary"><i class="fa fa-download"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Surat Pernyataan</td>
+                                        <td><a href="{{ asset($pengaturan->surat_pernyataan) }}"
+                                                class="btn btn-primary"><i class="fa fa-download"></i></a></td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 <section class="py-4" id="tentang">
@@ -186,6 +254,7 @@
         </div>
     </div>
 </section>
+<script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
 <script>
     const movePageRegis = () => {
         document.location.href = '/registrasi'

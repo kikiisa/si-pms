@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Pengaturan;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -71,8 +73,10 @@ class PostController extends Controller
      */
     public function show($id)
     {
+        
+        $app = Pengaturan::all()->first();
         $data = Post::all()->where('slug',$id)->first();
-        return view('frontend.news.detail',compact('data'));
+        return view('frontend.news.detail',compact('data','app'));
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Informasi;
+use App\Models\Pengaturan;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Str;
@@ -66,8 +67,10 @@ class InformasiController extends Controller
      */
     public function show($id)
     {
+        
+       $app = Pengaturan::all()->first();
        $data = Informasi::all()->where('slug',$id)->first();
-       return view('frontend.detail.index',compact('data'));
+       return view('frontend.detail.index',compact('data','app'));
     }
 
     /**

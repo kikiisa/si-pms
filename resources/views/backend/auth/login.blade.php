@@ -30,7 +30,7 @@
                                 <div class="row justify-content-center">
                                     <img class="text-center" src="https://alwin-pms.netlify.app/public/images/mbkm.png" width="90" alt=""
                                         srcset="">
-                                    <h4 class="ms-4 text-center mt-2">SISTEM INFORMASI PROGRAM MENGAJAR SEKOLAH </h4>
+                                    <h4 class="ms-4 text-center mt-2">SISTEM INFORMASI <br>PROGRAM MENGAJAR SEKOLAH </h4>
                                 </div>
                             </div>
                             <div class="card-body">

@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'nim' => '532419034',
+            'nim' => '5324190333',
             'username' => 'alwin',
             'name' => 'Alwin Manapu',
             'email' => 'alwin@gmail.com',
@@ -62,7 +62,7 @@ class UserSeeder extends Seeder
             'uuid' => Uuid::uuid4()->toString(),
             'username' => 'admin',
             'name' => 'Admin',
-            'email' => 'admin@admin',
+            'email' => 'admin@yahoo.com',
             'password' => bcrypt('123')
         ]);
         Operator::create([

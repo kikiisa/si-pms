@@ -9,6 +9,7 @@ use App\Models\Pengaturan;
 use App\Models\Post;
 use App\Models\ProgramKegiatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class BerandaController extends Controller
 {

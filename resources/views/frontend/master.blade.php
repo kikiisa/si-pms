@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('theme/vendor/fontawesome/css/regular.min.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendor/fontawesome/css/fontawesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/style.css')}}">
+    <link rel="stylesheet" href="{{asset('vendor/swiper/swiper-bundle.min.css')}}">
     <title>{{$app->title}}</title>
 </head>
 
