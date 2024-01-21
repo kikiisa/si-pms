@@ -67,8 +67,13 @@
        $(document).ready(function() {
             $('#deskripsi').summernote({
                     height: 200,
-            });          
+            });    
+
+            $("#table-1").dataTable({
+                
+            })      
         });
+
     </script>
     {{-- <script src="{{ asset('vendor/js/page/modules-chartjs.js')}}"></script> --}}
 </body>
