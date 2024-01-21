@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ProgramKegiatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -180,8 +181,10 @@ class RencanaKegiatanController extends Controller
             if($data)
             {
                 return redirect()->route('rencana-kegiatan.index')->with('success','Berhasil Menambahkan Data');
+            
             }else{
                 return redirect()->back()->with('error','Gagal Menambahkan Data');
+            
             }
         }else{
             $request->validate([
@@ -194,8 +197,11 @@ class RencanaKegiatanController extends Controller
             ]);
             if($data)
             {
+
                 return redirect()->route('rencana-kegiatan.index')->with('success','Berhasil Menambahkan Data');
+            
             }else{
+                
                 return redirect()->back()->with('error','Gagal Menambahkan Data');
             }
         }

@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 
 class LogbookController extends Controller
@@ -28,6 +29,7 @@ class LogbookController extends Controller
                     $nim = $request->get('nim');
                     $getUserEntity = User::all()->where('nim',$nim)->first();
                     $program = ProgramKegiatan::all()->where('user_id',$getUserEntity->id);
+                    
                     $checkLogBookHarian = LogHarian::all()->where('user_id',$getUserEntity->id)->where('category',$request->get('q'));
                     return view('backend.mahasiswa.log.index',[
                         'data' => $checkLogBookHarian,
@@ -58,13 +60,27 @@ class LogbookController extends Controller
                         'program' => $program
                     ]);
                 }else{
+                    // echo $request->get('q');
                     $program = ProgramKegiatan::with('pamongs','user')->where('user_id',Auth::user()->id)->first();
-                    $checkLogBookHarian = LogHarian::all()->where('user_id',Auth::user()->id)->where('category',$request->get('q'));
+                    $users = ProgramKegiatan::all()->where('user_id',Auth::user()->id);
+                    if($request->get("q") == "harian")
+                    {
+                        $checkLogBookHarian = LogHarian::all()->where('user_id',Auth::user()->id);
+                    }else{ 
+                        $result = LogHarian::all()->where('user_id',Auth::user()->id)->where('category',$request->get('q'));
+                        $groupedLogs = $result->groupBy(function ($log) {
+                            return Carbon::parse($log->created_at)->weekOfYear;
+                        });
+                        $checkLogBookHarian = $groupedLogs->sortBy(function ($logsInWeek, $weekNumber) {
+                            return $weekNumber;
+                        });
+                    }
                     return view('backend.mahasiswa.log.report',[
+                        'type' => 'minggu',
                         'data' => $checkLogBookHarian,
                         'program' => $program,
                         'filter' => $request->get('q'),
-                        'user' => $program
+                        
                     ]);
                 }
                

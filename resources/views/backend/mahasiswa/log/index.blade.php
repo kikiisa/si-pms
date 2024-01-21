@@ -2,7 +2,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Loog Book</h1>
+            <h1>Log Book Kegiatan</h1>
         </div>
         <div class="section-body">
             <div class="row">
@@ -50,7 +50,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Nama Rencana Kegiatan</th>
+                                                <th>Uraian Rencana Kegiatan</th>
                                                 <th>Jam</th>
                                                 <th>Tanggal Pelaksanaan</th>
                                                 <th>Kategori</th>
