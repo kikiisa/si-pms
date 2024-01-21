@@ -66,6 +66,7 @@ class LogbookController extends Controller
                     if($request->get("q") == "harian")
                     {
                         $checkLogBookHarian = LogHarian::all()->where('user_id',Auth::user()->id);
+                        
                     }else{ 
                         $result = LogHarian::all()->where('user_id',Auth::user()->id)->where('category',$request->get('q'));
                         $groupedLogs = $result->groupBy(function ($log) {
@@ -75,9 +76,9 @@ class LogbookController extends Controller
                             return $weekNumber;
                         });
                     }
-
+                  
                     return view('backend.mahasiswa.log.report',[
-                        'type' => 'minggu',
+                        'type' => $request->get("q"),
                         'data' => $checkLogBookHarian,
                         'program' => $program,
                         'filter' => $request->get('q'),

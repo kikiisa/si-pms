@@ -51,7 +51,7 @@
                                                 <th>Uraian Rencana Kegiatan</th>
                                                 <th>Jam</th>
                                                 <th>Tanggal Pelaksanaan</th>
-                                                <th>Kategori</th>
+                                               
                                                 @if (Auth::guard('pamongs')->check())
                                                     <th>Persetujuan</th>
                                                 @endif
@@ -67,13 +67,7 @@
                                                     <td>Waktu Mulai : <strong>{{ $item->mulai }}</strong> | Waktu Berakhir
                                                         <strong>{{ $item->berakhir }}</strong></td>
                                                     <td>{{ $item->created_at }}</td>
-                                                    <td>
-                                                        @if ($item->category == 'harian')
-                                                            <span class="badge bg-primary text-light">Harian</span>
-                                                        @else
-                                                            <span class="badge bg-success text-light">Mingguan</span>
-                                                        @endif
-                                                    </td>
+                                                   
                                                     @if (Auth::guard('pamongs')->check())
                                                         <td>
                                                             <form action="{{ Route('logbook.update', $item->id) }}"
@@ -148,11 +142,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Kategori Log Book</label>
-                                <select name="kategori" id="" class="form-control">
-                                    <option value="">Pilih Kategori Log Book</option>
-                                    <option value="harian">Harian</option>
-                                    <option value="mingguan">Mingguan</option>
-                                </select>
+                                <input type="text" hidden name="kategori" value="harian" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="">Deskripsi Kegiatan</label>

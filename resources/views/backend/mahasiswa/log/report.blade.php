@@ -35,7 +35,7 @@
                         </tr>
                     </thead>
                 </table>
-                @isset($type)
+                @if($type == 'mingguan')
                     @if ($data->count() > 0)
                         @foreach ($data as $week)
                             <h4>Minggu Ke - {{$loop->index+=1}}</h4>
@@ -125,9 +125,6 @@
             </div>
         </div>
     </div>
-    <script>
-        window.print()
-    </script>
 </body>
 
 </html>
