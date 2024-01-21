@@ -26,8 +26,6 @@
                                                             name="nim">
                                                     @endif
                                                 </div>
-                                                <button class="btn btn-primary" name="aksi"
-                                                    value="filter">Filter</button>
                                                 <button class="btn btn-warning" name="aksi" value="cetak">cetak <i
                                                         class="fa fa-print"></i></button>
                                             </div>
