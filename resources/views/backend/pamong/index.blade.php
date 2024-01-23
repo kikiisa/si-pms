@@ -2,14 +2,14 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Daftar Pamong</h1>
+            <h1>Daftar Guru Pamong</h1>
         </div>
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <button class="mb-4 btn btn-primary" onclick="return openModal()">Tambah Pamong</button>
+                            <button class="mb-4 btn btn-primary" onclick="return openModal()">Tambah Guru Pamong</button>
                             <div class="table-responsive">
                                 <table class="table table-striped" id="table-1">
                                     <thead>
@@ -48,7 +48,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Tambah Pamong</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Guru Pamong</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

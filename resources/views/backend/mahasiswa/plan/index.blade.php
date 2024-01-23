@@ -55,8 +55,8 @@
                             <table class="table table-striped" id="table-1">
                                 <thead>
                                     <tr>
-                                        <th>Pamong</th>
-                                        <th>Dosen</th>
+                                        <th>Guru Pamong</th>
+                                        <th>Dosen Pembimbing Lapangan</th>
                                         <th>Waktu Mulai</th>
                                         <th>Waktu Berakhir</th>
                                         <th>Total Hari</th>

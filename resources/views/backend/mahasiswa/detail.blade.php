@@ -7,7 +7,8 @@
         <div class="section-body">
             <div class="row justify-content-center">
                 <div class="col-lg-4">
-                    @if ($data->image != '')
+                    {{$data->profile}}
+                    @if($data->profile == "")
                         <div class="card rounded-circle">
                             <img src="{{ asset('vendor/img/avatar/avatar-1.png') }}"alt="" class="card-img-top" srcset="">
 
@@ -85,15 +86,23 @@
 
                                             <td>
                                                 @if ($program->status == 0)
-                                                    <div class="badge bg-danger text-white">Belum Di Verifikasi Pamong</div>
+                                                    <div class="badge bg-danger text-white">Belum Di Verifikasi Guru Pamong</div>
                                                 @else
                                                     <a href="javascript:void()" onclick="return laporanAkhir()"
                                                         class="btn btn-primary">Lihat Laporan Akhir</a>
                                                     <a href="javascript:void()" onclick="return laporanUmum()"
                                                         class="btn btn-outline-primary">Lihat Laporan Umum</a>
                                                 @endif
-                                                <a href="javascript:void()" onclick="return showCatatan()"
+                                                @if (Auth::guard("dpls")->check())
+                                                    @if (Auth::guard("dpls")->user()->roles == "mk")
+                                                        <a href="javascript:void()" onclick="return showCatatan()"
+                                                            class="btn btn-success">Lihat Catatan</a>
+                                                    @endif
+                                                @endif
+                                                @if (Auth::guard("pamongs")->check())
+                                                    <a href="javascript:void()" onclick="return showCatatan()"
                                                     class="btn btn-success">Lihat Catatan</a>
+                                                @endif
                                                 <a href="javascript:void()" onclick="return openPDFRencanaKegiatan()"
                                                     class="btn btn-success">Lihat File Rencana Kegiatan</a>
                                                 <a href="javascript:void()" class="btn btn-dark"
@@ -119,10 +128,10 @@
                     <div class="card-body">
                         @if (Auth::guard('operators')->check())
                             @isset($program)
-                                <button class="mb-4 btn btn-primary" onclick="return openModalEdit()">Ubah Pamong |
+                                <button class="mb-4 btn btn-primary" onclick="return openModalEdit()">Ubah Guru Pamong |
                                     DPL</button>
                             @else
-                                <button class="mb-4 btn btn-primary" onclick="return openModal()">Tambah Pamong |
+                                <button class="mb-4 btn btn-primary" onclick="return openModal()">Tambah Guru Pamong |
                                     DPL</button>
                             @endisset
                         @endif
@@ -133,7 +142,7 @@
                                 <table class="table table-striped" id="table-1">
                                     <thead>
                                         <tr>
-                                            <th>Pamong</th>
+                                            <th>Guru Pamong</th>
                                             <th>Dosen</th>
                                             <th>Waktu Mulai</th>
                                             <th>Waktu Berakhir</th>
@@ -210,7 +219,7 @@
                             <input type="text" name="user_id" hidden value="{{ $data->id }}">
                             <label for="">Pilih Guru Pamong | Sekolah</label>
                             <select name="pamong_id" id="" class="form-control">
-                                <option value="">Pilih Pamong | Sekolah</option>
+                                <option value="">Pilih Guru Pamong | Sekolah</option>
                                 @foreach ($pamong as $p)
                                     <option value="{{ $p->id }}">{{ $p->name }} | {{ $p->asal_sekolah }}
                                     </option>

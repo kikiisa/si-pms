@@ -10,7 +10,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            @if (Auth::check())
+                            @if (Auth::check() || Auth::guard("dpls")->check())
                                 @if ($program->count() > 0)
                                     @if ($program->first()->nama_kegiatan != '')
                                         <form action="{{ Route('logbook.index') }}" method="get">
