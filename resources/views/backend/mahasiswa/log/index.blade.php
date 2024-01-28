@@ -9,7 +9,6 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-
                             @if (Auth::check() || Auth::guard("dpls")->check())
                                 @if ($program->count() > 0)
                                     @if ($program->first()->nama_kegiatan != '')
