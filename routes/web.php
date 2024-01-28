@@ -61,7 +61,7 @@ Route::prefix('/account')->group(function(){
         Route::get('log-book/{id}',[LogbookController::class,'detailLogBook'])->name('detailLog');
         Route::resource('mahasiswa',UserControlller::class);
         Route::resource('logbook',LogbookController::class);
-
+        Route::get("rekap",[LogbookController::class,"rekap"])->name("rekap");
         Route::put('/upload-mk',[LaporanController::class,'uploadLaporanMk'])->name('uploadLaporanMk');
     });
 

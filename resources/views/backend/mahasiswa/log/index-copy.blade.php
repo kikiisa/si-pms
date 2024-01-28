@@ -12,23 +12,14 @@
                             @if (Auth::check() || Auth::guard("dpls")->check())
                                 @if ($program->count() > 0)
                                     @if ($program->first()->nama_kegiatan != '')
-                                        <form action="{{ Route('rekap') }}" method="GET">
-                                            
+                                        <form action="{{ Route('rekap') }}" method="POST">
                                             <div class="row">
                                                 <div class="col-lg-4">
-                                                    <select name="harian" id="harian" class="form-control">
-                                                        <option value="">Pilih Rekapan Harian</option>
+                                                    <select name="q" id="q" class="form-control">
+                                                        <option value="">Pilih Rekapan</option>
+                                                        <option value="mingguan">Mingguan</option>
+                                                        <option value="harian">Harian</option>
                                                     </select>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <select name="mingguan" id="mingguan" class="form-control">
-                                                        <option value="">Pilih Rekapan Mingguan</option>
-                                                        @foreach ($mingguan as $week)
-                                                            <option value="{{$loop->index+=1}}">{{$loop->index+=1 -1 }} Minggu</option>
-                                                            
-                                                        @endforeach
-                                                    </select>
-                                                    
                                                     @if (!Auth::check())
                                                         <input type="text" hidden value="{{ request()->segment(3) }}"
                                                             name="nim">
