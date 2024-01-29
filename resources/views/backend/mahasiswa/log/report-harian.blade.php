@@ -44,7 +44,7 @@
                                 <th>Deskripsi Kegiatan</th>
                                 <th>Jam</th>
                                 <th>Tanggal Pelaksanaan</th>
-                                <th>Persetujuan</th>
+                            
                             </tr>
                         </thead>
                         <tbody>
@@ -57,17 +57,7 @@
                                         <strong>{{ $item->berakhir }}</strong>
                                     </td>
                                     <td>{{ $item->created_at }}</td>
-                                    <td>
-                                        @if ($item->status == 0)
-                                            <span class="text-light badge bg-warning">Dalam Proses</span>
-                                        @endif
-                                        @if ($item->status == 1)
-                                            <span class="text-light badge bg-success">Sesuai</span>
-                                        @endif
-                                        @if ($item->status == 2)
-                                            <span class="text-light badge bg-success">Tidak Sesuai</span>
-                                        @endif
-                                    </td>
+                                    
                             @endforeach
                         </tbody>
                     </table>
