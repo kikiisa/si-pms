@@ -52,7 +52,7 @@
                                             <option value="">Pilih Role</option>
                                             <option value="mahasiswa">Mahasiswa</option>
                                             <option value="dpl">Dosen</option>
-                                            <option value="pamong">Pamong</option>
+                                            <option value="pamong">Guru Pamong</option>
                                             <option value="operator">Operator</option>
                                         </select>
                                         <div class="invalid-feedback">

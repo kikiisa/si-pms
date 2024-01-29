@@ -119,14 +119,14 @@
                 <div class="col-lg-2 col-4 mt-4">
                     <div class="bg-blue text-light p-4 rounded-4 shadow">
                         <h1 class="fw-bold">{{ $dpl }}</h1>
-                        <p>DPL</p>
+                        <p>Dosen Pembimbing Lapangan</p>
                     </div>
 
                 </div>
                 <div class="col-lg-2 col-4 mt-4">
                     <div class="bg-blue text-light p-4 rounded-4 shadow">
                         <h1 class="fw-bold">{{ $pamongs }}</h1>
-                        <p>PAMONG</p>
+                        <p>GURU PAMONG</p>
                     </div>
                 </div>
             </div>

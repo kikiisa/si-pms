@@ -9,26 +9,36 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            @if (Auth::check() || Auth::guard("dpls")->check())
+                            @if (Auth::check() || Auth::guard('dpls')->check())
                                 @if ($program->count() > 0)
                                     @if ($program->first()->nama_kegiatan != '')
                                         <form action="{{ Route('rekap') }}" method="GET">
-                                            
+                                            {{-- @foreach ($harian as $date => $logs)
+                                                        <h2>Tanggal: {{ $date }}</h2>
+                                                        <ul>
+                                                            @foreach ($logs as $log)
+                                                                <li>Kegiatan: {{ $log->rencana_kegiatan }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endforeach --}}
                                             <div class="row">
                                                 <div class="col-lg-4">
-                                                    <select name="harian" id="harian" class="form-control">
+                                                    <select name="harian" id="harian" class="form-control" onchange="return validasi()">
                                                         <option value="">Pilih Rekapan Harian</option>
+                                                        @foreach ($harian as $date => $logs)
+                                                            <option value="{{$date}}">{{$date}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-4">
-                                                    <select name="mingguan" id="mingguan" class="form-control">
+                                                    <select name="mingguan" id="mingguan" onchange="return validasi()" class="form-control">
                                                         <option value="">Pilih Rekapan Mingguan</option>
                                                         @foreach ($mingguan as $week)
-                                                            <option value="{{$loop->index+=1}}">{{$loop->index+=1 -1 }} Minggu</option>
-                                                            
+                                                            <option value="{{ $loop->index += 1 }}">{{ $loop->index += 1 - 1 }}
+                                                                Minggu</option>
                                                         @endforeach
                                                     </select>
-                                                    
+
                                                     @if (!Auth::check())
                                                         <input type="text" hidden value="{{ request()->segment(3) }}"
                                                             name="nim">
@@ -59,7 +69,7 @@
                                                 <th>Uraian Rencana Kegiatan</th>
                                                 <th>Jam</th>
                                                 <th>Tanggal Pelaksanaan</th>
-                                               
+
                                                 @if (Auth::guard('pamongs')->check())
                                                     <th>Persetujuan</th>
                                                 @endif
@@ -73,13 +83,14 @@
                                                     <td>{{ $loop->index += 1 }}</td>
                                                     <td>{{ $item->rencana_kegiatan }}</td>
                                                     <td>Waktu Mulai : <strong>{{ $item->mulai }}</strong> | Waktu Berakhir
-                                                        <strong>{{ $item->berakhir }}</strong></td>
+                                                        <strong>{{ $item->berakhir }}</strong>
+                                                    </td>
                                                     <td>{{ $item->created_at }}</td>
-                                                   
+
                                                     @if (Auth::guard('pamongs')->check())
                                                         <td>
-                                                            <form action="{{ Route('rekap', $item->id) }}"
-                                                                class="mt-3" method="post">
+                                                            <form action="{{ Route('rekap', $item->id) }}" class="mt-3"
+                                                                method="post">
                                                                 @csrf
                                                                 @method('PUT')
                                                                 <select name="status" id="" class="form-control">
@@ -167,6 +178,28 @@
         </div>
     </section>
     <script src="{{ asset('vendor/modules/toastify/src/toastify.js') }}"></script>
+    <script>
+        let harian = document.querySelector("#harian");
+        let mingguan = document.querySelector("#mingguan"); 
+        const validasi = () => 
+        {
+            if(harian.value.length == 0 && mingguan.value.length == 0){
+                harian.value = "";
+                mingguan.value = "";
+            }else if(harian.value.length > 0)
+            {
+                return mingguan.value = ""            
+            }else if(mingguan.value.length > 0){
+                return harian.value = ""            
+            }else if(harian.value.length < 0)
+            {
+                return mingguan.value = ""
+            
+            }else if(mingguan.value.length < 0){
+                return harian.value = ""
+            }
+        }
+    </script>
     @if (count($errors) > 0)
         <script>
             var errors = @json($errors->all());

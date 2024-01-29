@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12">
-                <h2 class="text-center">Laporan Mingguan</h2>
+                <h2 class="text-center">Laporan Harian</h2>
                 <hr>
                 <table border="0" class="mb-4">
                     <thead>
@@ -78,8 +78,8 @@
             <div class="col-lg-6 col-6 text-center">
                 <p class="fw-bold">
                     Mengetahui
-                    <br>Dosen Pembimbing Lapangan
-                    <br><br><br>{{$program->dpls->name}}
+                    <br>Guru Pamong
+                    <br><br><br>{{$program->pamongs->name}}
                 </p>
             </div>
             <div class="col-lg-6 col-6 text-center">

@@ -18,145 +18,107 @@ class LogbookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index(Request $request)
-    // {
 
-    //     if(!Auth::check())
-    //     {
-            
-
-    //         if($request->has('q') && $request->get('aksi') && $request->get('nim'))
-    //         {
-    //             if($request->get('aksi') == 'filter')
-    //             {
-    //                 $nim = $request->get('nim');
-    //                 $getUserEntity = User::all()->where('nim',$nim)->first();
-    //                 $program = ProgramKegiatan::all()->where('user_id',$getUserEntity->id);
-                    
-    //                 $checkLogBookHarian = LogHarian::all()->where('user_id',$getUserEntity->id)->where('category',$request->get('q'));
-    //                 return view('backend.mahasiswa.log.index',[
-    //                     'data' => $checkLogBookHarian,
-    //                     'program' => $program
-    //                 ]);
-    //             }else{
-    //                 $nim = $request->get('nim');
-    //                 $getUserEntity = User::all()->where('nim',$nim)->first();
-    //                 $program = ProgramKegiatan::with('pamongs','user')->where('user_id',$getUserEntity->id)->first();
-    //                 $checkLogBookHarian = LogHarian::all()->where('user_id',$getUserEntity->id)->where('category',$request->get('q'));
-    //                 return view('backend.mahasiswa.log.report',[
-    //                     'data' => $checkLogBookHarian,
-    //                     'program' => $program,
-    //                     'filter' => $request->get('q'),
-    //                     'user' => $program
-    //                 ]);
-    //             }
-    //         }
-    //     }else{
-    //         if($request->has('q') && $request->get('aksi'))
-    //         {
-    //             if($request->get('aksi') == 'filter')
-    //             {
-    //                 $program = ProgramKegiatan::all()->where('user_id',Auth::user()->id);
-    //                 $checkLogBookHarian = LogHarian::all()->where('user_id',Auth::user()->id);
-    //                 return view('backend.mahasiswa.log.index',[
-    //                     'data' => $checkLogBookHarian,
-    //                     'program' => $program
-    //                 ]);
-                    
-    //             }else{
-    //                 // echo $request->get('q');
-    //                 $program = ProgramKegiatan::with('pamongs','user')->where('user_id',Auth::user()->id)->first();
-    
-    //                 $users = ProgramKegiatan::all()->where('user_id',Auth::user()->id);
-    //                 if($request->get("q") == "harian")
-    //                 {
-    //                     $checkLogBookHarian = LogHarian::all()->where('user_id',Auth::user()->id);
-                        
-    //                 }else{ 
-    //                     $result = LogHarian::all()->where('user_id',Auth::user()->id)->where('category',$request->get('q'));
-    //                     $groupedLogs = $result->groupBy(function ($log) {
-    //                         return Carbon::parse($log->created_at)->weekOfYear;
-    //                     });
-    //                     $checkLogBookHarian = $groupedLogs->sortBy(function ($logsInWeek, $weekNumber) {
-    //                         return $weekNumber;
-    //                     });
-    //                 }
-    //                 return view('backend.mahasiswa.log.report',[
-    //                     'type' => $request->get("q"),
-    //                     'data' => $checkLogBookHarian,
-    //                     'program' => $program,
-    //                     'filter' => $request->get('q'),
-                        
-    //                 ]);
-    //             }
-               
-    //         }else{
-    //             $program = ProgramKegiatan::all()->where('user_id',Auth::user()->id);
-    //             $checkLogBookHarian = LogHarian::all()->where('user_id',Auth::user()->id);
-    //             return view('backend.mahasiswa.log.index',[
-    //                 'data' => $checkLogBookHarian,
-    //                 'program' => $program
-    //             ]);
-    //         }
-    //     }
-     
-    // }
     public function index(Request $request)
     {
-        $result = LogHarian::all()->where('user_id',Auth::user()->id);
+        $result = LogHarian::all()->where('user_id', Auth::user()->id);
+        
         $groupedLogs = $result->groupBy(function ($log) {
             return Carbon::parse($log->created_at)->weekOfYear;
         });
         $checkLogBookMingguan = $groupedLogs->sortBy(function ($logsInWeek, $weekNumber) {
             return $weekNumber;
         });
-        $program = ProgramKegiatan::all()->where('user_id',Auth::user()->id);
-        $checkLogBookHarian = LogHarian::all()->where('user_id',Auth::user()->id);
-        return view('backend.mahasiswa.log.index',[
-            'data' => $checkLogBookHarian,
+        $program = ProgramKegiatan::all()->where('user_id', Auth::user()->id);
+        // $checkLogBookHarian = LogHarian::all()->where('user_id', Auth::user()->id);
+        $checkLogBookHarian = LogHarian::where('user_id',Auth::user()->id)
+        ->get()
+        ->groupBy(function ($date) {
+            return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
+        });
+        return view('backend.mahasiswa.log.index', [
+            'data' => $result,
             'mingguan' => $checkLogBookMingguan,
-            'program' => $program
+            'program' => $program,
+            'harian' => $checkLogBookHarian,
         ]);
-
     }
-    
+
     public function rekap(Request $request)
     {
-        if($request->has("harian") && $request->has("mingguan"))
-        {
+        if ($request->has("harian") && $request->has("mingguan")) {
             $mingguan = $request->get("mingguan");
             $harian = $request->get("harian");
-            if($mingguan)
-            {
-                if(!Auth::check())
-                {
+            if ($mingguan) {
+                if (!Auth::check()) {
+                    $nim = $request->nim;
+                    $getUserEntity = User::all()->where('nim', $nim)->first();
+
                     // jika tidak terauntentikasi
-                    echo " harus pake id eksternal";
-                }else{
-                    // jika terauntikasi
-                    
-                    $result = LogHarian::all()->where('user_id',Auth::user()->id);
+                    $result = LogHarian::all()->where('user_id', $getUserEntity->id);
                     $groupedLogs = $result->groupBy(function ($log) {
                         return Carbon::parse($log->created_at)->weekOfYear;
                     });
                     $checkLogBookMingguan = $groupedLogs->sortBy(function ($logsInWeek, $weekNumber) {
                         return $weekNumber;
                     });
-                    $program = ProgramKegiatan::with('pamongs','user','dpls')->where('user_id',Auth::user()->id)->first();
-                  
-                    return response()->view("backend.mahasiswa.log.report-mingguan",[
+                    $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id', $getUserEntity->id)->first();
+
+                    return response()->view("backend.mahasiswa.log.report-mingguan", [
+                        'program' => $program,
+                        'mingguan' => $checkLogBookMingguan[$mingguan],
+                    ]);
+                } else {
+                    // jika terauntikasi
+                    $result = LogHarian::all()->where('user_id', Auth::user()->id);
+                    
+                    $groupedLogs = $result->groupBy(function ($log) {
+                        return Carbon::parse($log->created_at)->weekOfYear;
+                    });
+                    $checkLogBookMingguan = $groupedLogs->sortBy(function ($logsInWeek, $weekNumber) {
+                        return $weekNumber;
+                    });
+                    $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id', Auth::user()->id)->first();
+
+                    return response()->view("backend.mahasiswa.log.report-mingguan", [
                         'program' => $program,
                         'mingguan' => $checkLogBookMingguan[$mingguan],
                     ]);
                 }
-            }   
-            
-            if($harian)
-            {
-                echo $harian;
             }
 
-
+            if ($harian != "") {
+                if(!Auth::check())
+                {
+                    $nim = $request->nim;
+                    $getUserEntity = User::all()->where('nim', $nim)->first();
+                    
+                    $result = LogHarian::all()->where('user_id',$getUserEntity->id);
+                    $checkLogBookHarian = LogHarian::where('user_id',$getUserEntity->id)
+                    ->get()
+                    ->groupBy(function ($date) {
+                        return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
+                    });
+                    $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id', $getUserEntity->id)->first();
+                    return response()->view("backend.mahasiswa.log.report-harian", [
+                        'program' => $program,
+                        'mingguan' => $checkLogBookHarian->get($harian,[]),
+                    ]);
+                }else{
+                    $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id',Auth::user()->id)->first();
+                    $result = LogHarian::all()->where('user_id', Auth::user()->id);
+                    $checkLogBookHarian = LogHarian::where('user_id',Auth::user()->id)
+                    ->get()
+                    ->groupBy(function ($date) {
+                        return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
+                    });
+                    return response()->view("backend.mahasiswa.log.report-harian", [
+                        'program' => $program,
+                        'mingguan' => $checkLogBookHarian->get($harian,[]),
+                    ]);
+                    
+                }
+            }
         }
     }
 
@@ -194,10 +156,9 @@ class LogbookController extends Controller
             'category' => $request->kategori,
             'user_id' => Auth::user()->id
         ]);
-        if($data)
-        {
-            return redirect()->back()->with('success','Berhasil Menambahkan Log Book Harian');
-        }else{
+        if ($data) {
+            return redirect()->back()->with('success', 'Berhasil Menambahkan Log Book Harian');
+        } else {
             return redirect()->back()->with('error', 'Gagal Menambahkan Log Book Harian');
         }
     }
@@ -210,8 +171,8 @@ class LogbookController extends Controller
      */
     public function show($id)
     {
-        return view('backend.mahasiswa.log.detail',[
-            'data' => LogHarian::all()->where('uuid',$id)->first()
+        return view('backend.mahasiswa.log.detail', [
+            'data' => LogHarian::all()->where('uuid', $id)->first()
         ]);
     }
 
@@ -221,32 +182,39 @@ class LogbookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function detailLogBook($id)
+    public function detailLogBook(Request $request, $id)
     {
-        $data = User::with('logbook')->where("nim",$id)->first();
-        $program = ProgramKegiatan::all()->where('user_id',$data->id);
-        $checkLogBookHarian = LogHarian::all()->where('user_id',$data->id);
+
+        $data = User::with('logbook')->where("nim", $id)->first();
+        $program = ProgramKegiatan::all()->where('user_id', $data->id);
+        $checkLogBookHarian = LogHarian::all()->where('user_id', $data->id);
         $groupedLogs = $checkLogBookHarian->groupBy(function ($log) {
             return Carbon::parse($log->created_at)->weekOfYear;
         });
         $checkLogBookMingguan = $groupedLogs->sortBy(function ($logsInWeek, $weekNumber) {
             return $weekNumber;
         });
-        return view('backend.mahasiswa.log.index',[
+        $harian = LogHarian::where('user_id',$data->id)
+            ->orderBy('created_at') // Pastikan data diurutkan berdasarkan tanggal
+            ->get()
+            ->groupBy(function ($date) {
+                return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
+            });
+        return view('backend.mahasiswa.log.index', [
             'data' => $data->logbook,
             'program' => $program,
             'check' => $checkLogBookHarian,
-            'mingguan' => $checkLogBookMingguan
+            'mingguan' => $checkLogBookMingguan,
+            'harian' => $harian,
         ]);
     }
     public function edit($id)
     {
-        
     }
 
     /**
      * Update the specified resource in storage.
-     *
+     *  
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -258,11 +226,10 @@ class LogbookController extends Controller
             'status' => 'required'
         ]);
         $data->update($request->all());
-        if($data)
-        {
-            return redirect()->back()->with('success','Berhasil Mengubah Data');
-        }else{
-            return redirect()->back()->with('error','Gagal Mengubah Data');
+        if ($data) {
+            return redirect()->back()->with('success', 'Berhasil Mengubah Data');
+        } else {
+            return redirect()->back()->with('error', 'Gagal Mengubah Data');
         }
     }
 
