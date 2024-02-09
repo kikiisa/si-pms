@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
             'email' => 'alwin@gmail.com',
             'phone' => '082393508734',
             'password' => bcrypt('123'),
+            'status' => 1,
             'tahun_masuk' => Carbon::createFromDate(2023, 10, 19)
 
         ]);
