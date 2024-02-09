@@ -2,7 +2,7 @@
 @section('content')
     <!-- hero -->
     <style>
-        .click{
+        .click {
             cursor: pointer;
         }
     </style>
@@ -13,7 +13,6 @@
                     <section class="slider container">
                         <div class="row justify-content-center">
                             <div class="col-lg-12 rounded-4">
-                               
                                 <div class="card border-0">
                                     <div id="carouselExampleDark" class="carousel carousel-dark slide">
                                         <div class="carousel-indicators">
@@ -26,15 +25,16 @@
                                                 data-bs-slide-to="2" aria-label="Slide 3"></button>
                                         </div>
                                         <div class="carousel-inner">
-                                            <div class="carousel-item active click" onclick="location.href='{{ route('berita.detail', $berita[0]->slug) }}'" data-bs-interval="10000">
-                                                <img src="{{ asset($berita[0]->image) }}"
-                                                    class="d-block w-100">
+                                            <div class="carousel-item active click"
+                                                onclick="location.href='{{ route('berita.detail', $berita[0]->slug) }}'"
+                                                data-bs-interval="10000">
+                                                <img src="{{ asset($berita[0]->image) }}" class="d-block w-100">
 
                                             </div>
                                             @foreach ($berita as $sl)
-                                                <div class="carousel-item click" onclick="location.href='{{ route('berita.detail', $sl->slug) }}'"">
-                                                    <img src="{{ asset($sl->image) }}"
-                                                        class="d-block w-100">
+                                                <div class="carousel-item click"
+                                                    onclick="location.href='{{ route('berita.detail', $sl->slug) }}'"">
+                                                    <img src="{{ asset($sl->image) }}" class="d-block w-100">
 
                                                 </div>
                                             @endforeach
@@ -143,9 +143,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-8">
-                                    <h3 class="fw-bold">Informasi</h3>
-                                    <hr>
+                                <div class="col-lg-12">
                                     <div class="table-responsive w-100">
                                         @if ($post->count() < 0))
                                             <div class="p-4 bg-danger rounded-4 text-white text-center fw-bold">Belum Ada
@@ -186,46 +184,7 @@
                                         @endempty
                                 </div>
                             </div>
-                            <div class="col-lg-4">
-                                <h3 class="fw-bold">Download File</h3>
-                                <hr>
-                                <table class="table">
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    <tr>
-                                        <td>Petunjuk Teknis Pelaksanaan Kegiatan PMS MBKM</td>
-                                        <td><a href="{{ asset($pengaturan->petunjuk) }}" class="btn btn-primary"><i
-                                                    class="fa fa-download"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>SK Rektor tentang Panitia, DPL, Kepsek dan Guru Pamong PMS </td>
-                                        <td><a href="{{ asset($pengaturan->sk_rektor) }}" class="btn btn-primary"><i
-                                                    class="fa fa-download"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Format Rancangan Kegiatan</td>
-                                        <td><a href="{{ asset($pengaturan->format_rancangan) }}"
-                                                class="btn btn-primary"><i class="fa fa-download"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Format Laporan Akhir Program PMS</td>
-                                        <td><a href="{{ asset($pengaturan->format_laporan_akhir) }}"
-                                                class="btn btn-primary"><i class="fa fa-download"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Format Laporan Mata Kuliah</td>
-                                        <td><a href="{{ asset($pengaturan->format_laporan_mata_kuliah) }}"
-                                                class="btn btn-primary"><i class="fa fa-download"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Surat Pernyataan</td>
-                                        <td><a href="{{ asset($pengaturan->surat_pernyataan) }}"
-                                                class="btn btn-primary"><i class="fa fa-download"></i></a></td>
-                                    </tr>
-                                </table>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -236,20 +195,47 @@
 </section>
 <section class="py-4" id="tentang">
     <div class="container mt-4">
-        <div class="row justify-content-center text-start mb-4">
-            <h1 class="text-center fw-bold">Tentang Kami</h1>
-            <div class="col-lg-12 mt-3">
-                <div class="card border-0">
-                    <div class="card-header bg-blue">
-
-                    </div>
-                    <div class="card-body">
-                        <h2 class="fw-bold text-center">{{ $app->title }}</h2>
-                        <div class="content" style="text-align: justify">
-                            {!! $app->deskripsi_full !!}
-                        </div>
-                    </div>
-                </div>
+        <h3 class="fw-bold text-center">Download File</h3>
+        <div class="card border-0">
+            <div class="card-header bg-blue">
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th>Nama File</th>
+                        <th>Aksi</th>
+                    </tr>
+                    <tr>
+                        <td>Petunjuk Teknis Pelaksanaan Kegiatan PMS MBKM</td>
+                        <td><a href="{{ asset($pengaturan->petunjuk) }}" class="btn btn-primary"><i
+                                    class="fa fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>Format Lembar Bimbingan Program PMS </td>
+                        <td><a href="{{ asset($pengaturan->sk_rektor) }}" class="btn btn-primary"><i
+                                    class="fa fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>Format Rancangan Kegiatan</td>
+                        <td><a href="{{ asset($pengaturan->format_rancangan) }}" class="btn btn-primary"><i
+                                    class="fa fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>Format Laporan Akhir Program PMS</td>
+                        <td><a href="{{ asset($pengaturan->format_laporan_akhir) }}" class="btn btn-primary"><i
+                                    class="fa fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>Format Laporan Mata Kuliah</td>
+                        <td><a href="{{ asset($pengaturan->format_laporan_mata_kuliah) }}" class="btn btn-primary"><i
+                                    class="fa fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>Surat Pernyataan</td>
+                        <td><a href="{{ asset($pengaturan->surat_pernyataan) }}" class="btn btn-primary"><i
+                                    class="fa fa-download"></i></a></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

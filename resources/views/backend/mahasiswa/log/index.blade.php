@@ -89,7 +89,7 @@
 
                                                     @if (Auth::guard('pamongs')->check())
                                                         <td>
-                                                            <form action="{{ Route('rekap', $item->id) }}" class="mt-3"
+                                                            <form action="{{ Route('rekap.update', $item->id) }}" class="mt-3"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('PUT')
@@ -98,7 +98,7 @@
                                                                     <option value="1">Sesuai</option>
                                                                     <option value="2">Tidak Sesuai</option>
                                                                 </select>
-                                                                <button class="mt-2 btn btn-dark w-100">simpan</button>
+                                                                <button class="mt-2 btn btn-dark w-100" type="submit">simpan</button>
                                                             </form>
                                                         </td>
                                                     @endif
@@ -114,8 +114,13 @@
                                                         </td>
                                                     @endif
                                                     <td>
-                                                        <a href="{{ Route('logbook.show', $item->uuid) }}"
-                                                            class="btn btn-success text-light">Detail</a>
+                                                        <form action="{{ Route('logbook.destroy', $item->id) }}" method="post">
+                                                            @method("DELETE")
+                                                            @csrf
+                                                            <a href="{{ Route('logbook.show', $item->uuid) }}"
+                                                                class="btn btn-success text-light">Detail</a>
+                                                            <button class="btn btn-danger mt-1">Hapus</button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             @endforeach

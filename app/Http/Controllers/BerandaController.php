@@ -31,4 +31,12 @@ class BerandaController extends Controller
             'pengaturan' => Pengaturan::all()->first()
         ]);
     }
+
+    public function about()
+    {
+        return view('frontend.about.index',[
+            'pengaturan' => Pengaturan::all()->first(),
+            'app' => Pengaturan::all()->first(),
+        ]);        
+    }
 }

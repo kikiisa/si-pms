@@ -60,6 +60,10 @@
                             @csrf
                             @method("POST")
                             <div class="form-group">
+                                <label for="nip" id="nip">NIP</label>
+                                <input name="uuid" type="text" id="nip" value="{{old('nip')}}" placeholder="NIP" class="form-control">
+                            </div>
+                            <div class="form-group">
                                 <label for="username" id="username">Username</label>
                                 <input name="username" type="text" id="username" value="{{old('username')}}" placeholder="Username" class="form-control">
                             </div>

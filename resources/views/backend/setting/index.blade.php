@@ -29,7 +29,7 @@
                                     <textarea name="deskripsi_full" id="deskripsi" cols="30" rows="10">{{ $data->deskripsi_full }}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label>File SK REKTOR</label>
+                                    <label>Format Bimbingan Laporan PMS</label>
                                     <input type="file" name="sk_rektor" class="form-control-file">
                                     <small class="text-info mt-2">File : PDF</small>
                                 </div>

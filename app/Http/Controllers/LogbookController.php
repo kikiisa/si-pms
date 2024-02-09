@@ -222,6 +222,7 @@ class LogbookController extends Controller
     public function update(Request $request, $id)
     {
         $data = LogHarian::find($id);
+        
         $request->validate([
             'status' => 'required'
         ]);
@@ -241,6 +242,12 @@ class LogbookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = LogHarian::find($id);
+        $data->delete();
+        if ($data) {
+            return redirect()->back()->with('success', 'Berhasil Menghapus Data');
+        } else {
+            return redirect()->back()->with('error', 'Gagal Menghapus Data');
+        }
     }
 }

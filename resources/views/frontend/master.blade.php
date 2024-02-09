@@ -46,7 +46,7 @@
                         <a class="nav-link text-light fw-bold"  aria-current="page" href="/">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light fw-bold" id="scrollTentang" href="#tentang">Tentang Kami</a>
+                        <a class="nav-link text-light fw-bold"  href="{{route('about')}}">Tentang Kami</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light fw-bold" id="scrollInformasi" href="#informasi">Informasi</a>

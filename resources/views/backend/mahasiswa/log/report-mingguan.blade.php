@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12">
-                <h2 class="text-center">Laporan Mingguan</h2>
+                <h2 class="text-center">Log Mingguan</h2>
                 <hr>
                 <table border="0" class="mb-4">
                     <thead>
@@ -39,11 +39,11 @@
                     <table border="1" id="table-1">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Uraian Rencana Kegiatan</th>
-                                <th>Deskripsi Kegiatan</th>
-                                <th>Jam</th>
-                                <th>Tanggal Pelaksanaan</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Rancangan Kegiatan</th>
+                                <th class="text-center">Deskripsi Kegiatan</th>
+                                <th class="text-center">Jam</th>
+                                <th class="text-center">Tanggal Pelaksanaan</th>
                             
                             </tr>
                         </thead>
@@ -69,20 +69,21 @@
                 <p class="fw-bold">
                     Mengetahui
                     <br>Dosen Pembimbing Lapangan
-                    <br><br><br>{{$program->dpls->name}}
+                    <br><br><br><u>{{$program->dpls->name}}</u>
+                    <br>{{$program->dpls->uuid}}
                 </p>
             </div>
             <div class="col-lg-6 col-6 text-center">
                 <p class="fw-bold">
-                    Mengetahui
                     <br>Mahasiswa Peserta MBKM
-                    <br><br><br>{{$program->user->name}}
+                    <br><br><br><u>{{$program->user->name}}</u> 
+                    <br>{{$program->user->nim}}
                 </p>
             </div>
         </div>
     </div>
     <script>
-        window.print()
+        window.print()  
     </script>
 </body>
 

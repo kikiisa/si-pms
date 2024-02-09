@@ -15,11 +15,7 @@ class SettingController extends Controller
     {
         $this->service = new UploadService;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function index()
     {   
         $data = Pengaturan::all()->first();

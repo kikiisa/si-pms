@@ -40,6 +40,7 @@ class DplController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'uuid' => 'required|unique:dpls',
             'name' => 'required',
             'username' => 'required|unique:dpls',
             'email' => 'required|unique:dpls',
@@ -48,7 +49,7 @@ class DplController extends Controller
             'confirm' => 'required|same:password',
         ]);
         $data = Dpl::create([
-            'uuid' => Uuid::uuid4()->toString(),
+            'uuid' => $request->uuid,
             'username' => $request->username,
             'name' => $request->name,
             'email' => $request->email,
@@ -101,14 +102,18 @@ class DplController extends Controller
         if(isset($request->password))
         {
             $request->validate([
+                'uuid' => 'required',
                 'username' => 'required',
                 'name' => 'required',
                 'email' => 'required',
                 'roles' => 'required',
                 'password' => 'required',
                 'confirm' => 'required|same:password',
+            ],[
+                'uuid.required' => 'NIP Tidak Boleh Kosong',
             ]);
             $data->update([
+                'uuid' => $request->uuid,
                 'username' => $request->username,
                 'name' => $request->name,
                 'email' => $request->email,
@@ -123,12 +128,14 @@ class DplController extends Controller
             }
         }else{
             $request->validate([
+                'uuid' => 'required',
                 'username' => 'required',
                 'name' => 'required',
                 'email' => 'required',
                 'roles' => 'required',
             ]);
             $data->update([
+                'uuid' => $request->uuid,
                 'username' => $request->username,
                 'name' => $request->name,
                 'email' => $request->email,

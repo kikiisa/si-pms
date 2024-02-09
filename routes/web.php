@@ -39,6 +39,7 @@ Route::get('/registrasi',[RegisterController::class,'index'])->name('register');
 Route::post('/registrasi',[RegisterController::class,'store'])->name('register.store');
 Route::get('post/{id}',[InformasiController::class,'show'])->name('post.detail');
 Route::get('/berita/{id}',[PostController::class,'show'])->name('berita.detail');
+Route::get("tentang-kami",[BerandaController::class,'about'])->name('about');
 
 Route::get('/forgot-password',[ForgotPasswordController::class,'index'])->name('forgotPassword');
 Route::post('/forgot-password',[ForgotPasswordController::class,'store'])->name('forgotPassword.store');
@@ -62,6 +63,8 @@ Route::prefix('/account')->group(function(){
         Route::resource('mahasiswa',UserControlller::class);
         Route::resource('logbook',LogbookController::class);
         Route::get("rekap",[LogbookController::class,"rekap"])->name("rekap");
+        Route::put("rekap/{id}",[LogbookController::class,"update"])->name("rekap.update");
+        Route::put("delete/{id}",[LogbookController::class,"destroy"])->name("rekap.destroy");
         Route::put('/upload-mk',[LaporanController::class,'uploadLaporanMk'])->name('uploadLaporanMk');
     });
 

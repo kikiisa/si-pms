@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12">
-                <h2 class="text-center">Laporan Harian</h2>
+                <h2 class="text-center">Log Harian</h2>
                 <hr>
                 <table border="0" class="mb-4">
                     <thead>
@@ -39,11 +39,11 @@
                     <table border="1" id="table-1">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Uraian Rencana Kegiatan</th>
-                                <th>Deskripsi Kegiatan</th>
-                                <th>Jam</th>
-                                <th>Tanggal Pelaksanaan</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Nama Kegiatan</th>
+                                <th class="text-center">Deskripsi Kegiatan</th>
+                                <th class="text-center">Jam</th>
+                                <th class="text-center">Tanggal Pelaksanaan</th>
                             
                             </tr>
                         </thead>
@@ -69,14 +69,15 @@
                 <p class="fw-bold">
                     Mengetahui
                     <br>Guru Pamong
-                    <br><br><br>{{$program->pamongs->name}}
+                    <br><br><br><u>{{$program->pamongs->name}}</u> 
+                    <br>{{$program->pamongs->uuid}}
                 </p>
             </div>
             <div class="col-lg-6 col-6 text-center">
                 <p class="fw-bold">
-                    Mengetahui
-                    <br>Mahasiswa Peserta MBKM
-                    <br><br><br>{{$program->user->name}}
+                    <br>Mahasiswa PMS MBKM
+                    <br><br><br><u>{{$program->user->name}}</u>
+                    <br>{{$program->user->nim}}    
                 </p>
             </div>
         </div>
