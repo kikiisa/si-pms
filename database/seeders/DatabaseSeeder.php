@@ -14,9 +14,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            // PamongSeeder::class,
+            PamongSeeder::class,
             SettingSeeder::class,   
-            // LogBookSeeder::class,
+            LogBookSeeder::class,
         ]);
     }
 }

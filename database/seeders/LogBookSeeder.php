@@ -17,7 +17,7 @@ class LogBookSeeder extends Seeder
      */
     public function run()
     {
-        $startDate = Carbon::create(2022, 11, 1);
+        $startDate = Carbon::create(2024,4,20);
         $endDate = Carbon::now();
 
         $user_id = 1;
