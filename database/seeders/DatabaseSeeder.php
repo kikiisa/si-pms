@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PamongSeeder::class,
             SettingSeeder::class,   
-            LogBookSeeder::class,
+            // LogBookSeeder::class,
         ]);
     }
 }

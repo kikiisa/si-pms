@@ -26,6 +26,7 @@ class LogbookController extends Controller
         $groupedLogs = $result->groupBy(function ($log) {
             return Carbon::parse($log->created_at)->weekOfYear;
         });
+        
         $checkLogBookMingguan = $groupedLogs->sortBy(function ($logsInWeek, $weekNumber) {
             return $weekNumber;
         });
@@ -36,6 +37,7 @@ class LogbookController extends Controller
         ->groupBy(function ($date) {
             return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
         });
+        
         return view('backend.mahasiswa.log.index', [
             'data' => $result,
             'mingguan' => $checkLogBookMingguan,
@@ -57,13 +59,13 @@ class LogbookController extends Controller
                     // jika tidak terauntentikasi
                     $result = LogHarian::all()->where('user_id', $getUserEntity->id);
                     $groupedLogs = $result->groupBy(function ($log) {
-                        return Carbon::parse($log->created_at)->weekOfYear;
+                        return Carbon::parse($log->created_at)->weekOfMonth;
                     });
                     $checkLogBookMingguan = $groupedLogs->sortBy(function ($logsInWeek, $weekNumber) {
                         return $weekNumber;
                     });
                     $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id', $getUserEntity->id)->first();
-
+                    // dd($mingguan);
                     return response()->view("backend.mahasiswa.log.report-mingguan", [
                         'program' => $program,
                         'mingguan' => $checkLogBookMingguan[$mingguan],
@@ -73,17 +75,21 @@ class LogbookController extends Controller
                     $result = LogHarian::all()->where('user_id', Auth::user()->id);
                     
                     $groupedLogs = $result->groupBy(function ($log) {
-                        return Carbon::parse($log->created_at)->weekOfYear;
+                        
+                        return Carbon::parse($log->created_at)->weekOfMonth;
                     });
+                    // dd($groupedLogs);
                     $checkLogBookMingguan = $groupedLogs->sortBy(function ($logsInWeek, $weekNumber) {
                         return $weekNumber;
                     });
+                    
                     $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id', Auth::user()->id)->first();
-
+                    
                     return response()->view("backend.mahasiswa.log.report-mingguan", [
                         'program' => $program,
                         'mingguan' => $checkLogBookMingguan[$mingguan],
                     ]);
+                    
                 }
             }
 
