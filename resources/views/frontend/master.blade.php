@@ -81,6 +81,7 @@
                     <p class="text-light">{{$app->sub_judul}}</p>
                     <img src="{{asset('theme/images/mbkm.png')}}" width="100" alt="" srcset="">
                     <img src="{{asset('theme/images/ung.png')}}" class="ms-3" width="60" alt="" srcset="">
+                
                 </div>
                 <div class="col-lg-2 text-light">
                     <h6>Social Media</h6>

@@ -31,11 +31,10 @@ class UserSeeder extends Seeder
             'tahun_masuk' => Carbon::createFromDate(2023, 10, 19)
 
         ]);
-
         Dpl::create([
             'uuid' => Uuid::uuid4()->toString(),
             'username' => 'sitisuhada',
-            'name' => 'Siti Sudaha S.Kom M.T',
+            'name' => 'Siti Suhada, S.Kom, MT',
             'email' => 'siti@gmail.com',
             'roles' => 'dpl',
             'password' => bcrypt('123')
@@ -44,7 +43,7 @@ class UserSeeder extends Seeder
         Dpl::create([
             'uuid' => Uuid::uuid4()->toString(),
             'username' => 'azis',
-            'name' => 'azis bouty M.Kom',
+            'name' => 'Abd. Aziz Bouty, S.Kom, M.Kom',
             'email' => 'azis@gmail.com',
             'roles' => 'mk',
             'password' => bcrypt('123')
@@ -53,10 +52,10 @@ class UserSeeder extends Seeder
         Pamong::create([
             'uuid' => Uuid::uuid4()->toString(),
             'username' => 'guru',
-            'name' => 'Amelya S.Kom',
-            'email' => 'amelya89@gmail.com',
+            'name' => 'Fatmawati Poloungo, S.kom',
+            'email' => 'fatmawati',
             'password' => bcrypt('123'),
-            'asal_sekolah' => 'SMK 1 SUWAWA'
+            'asal_sekolah' => 'SMK 2 Paguyaman',
         ]);
 
         Operator::create([

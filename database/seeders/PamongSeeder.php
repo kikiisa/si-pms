@@ -18,8 +18,8 @@ class PamongSeeder extends Seeder
     {
         Pamong::create([
             'uuid' => Uuid::uuid4()->toString(),
-            'username' => 'fatmasuhada',
-            'name' => 'Fatma Suhada',
+            'username' => 'fatma',
+            'name' => 'Fatmawati Poloungo, S.kom',
             'email' => 'fatma@gmail',
             'password' => bcrypt('123'),
             'asal_sekolah' => 'SMK 2 PAGUYAMAN',
