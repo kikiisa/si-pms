@@ -15,6 +15,9 @@ class BerandaController extends Controller
 {
     public function index(Request $request)
     {
+        Artisan::call("cache:clear");   
+        Artisan::class("view:clear");
+        Artisan::call("optimize:clear");
         if($request->get('post'))
         {
             $post = Informasi::where('title','like','%'.$request->get('post').'%')->paginate(5);
