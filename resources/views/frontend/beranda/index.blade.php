@@ -231,7 +231,7 @@
                                     class="fa fa-download"></i></a></td>
                     </tr>
                     <tr>
-                        <td>Surat Pernyataan</td>
+                        <td>Panduan Penggunaan Aplikasi</td>
                         <td><a href="{{ asset($pengaturan->surat_pernyataan) }}" class="btn btn-primary"><i
                                     class="fa fa-download"></i></a></td>
                     </tr>

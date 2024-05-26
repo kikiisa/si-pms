@@ -39,9 +39,9 @@
                                     <small class="text-info mt-2">File : PDF</small>
                                 </div>
                                 <div class="form-group">
-                                    <label>File Surat Pertanyaan</label>
+                                    <label>Upload Panduan</label>
                                     <input type="file" name="surat_pernyataan" class="form-control-file">
-                                    <small class="text-info mt-2">File : DOCX</small>
+                                    <small class="text-info mt-2">File : PDF</small>
                                 </div>
                               
                                 <div class="form-group">

@@ -21,28 +21,110 @@ class LogbookController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+     public function getLogsForWeek($data_program_kegiatan, $result, $weekNumber)
+     {
+         // Retrieve the authenticated user's ProgramKegiatan records
+         $logsForWeek = [];
+         foreach ($result as $log) {
+             $logDate = Carbon::parse($log->tanggal);
+     
+             foreach ($data_program_kegiatan as $program) {
+                 $start = Carbon::parse($data_program_kegiatan->waktu_mulai);
+                 $end = Carbon::parse($data_program_kegiatan->waktu_berakhir);
+     
+                 if ($logDate->between($start, $end)) {
+                     // Calculate the week number
+                     $currentWeekNumber = $logDate->diffInWeeks($start) + 1; // Adding 1 to start from week 1
+     
+                     if ($currentWeekNumber === $weekNumber) {
+                         $logsForWeek[] = $log;
+                     }
+     
+                     break; // No need to continue checking other programs once a match is found
+                 }
+             }
+         }
+     
+         return $logsForWeek;
+     }
+     
+    
+    public function countWeekWithData($data_program_kegiatan,$result)
+    {
+        // Retrieve the authenticated user's ProgramKegiatan records
+        $weekData = [];
+        foreach ($result as $log) {
+            $logDate = Carbon::parse($log->tanggal);
+
+            foreach ($data_program_kegiatan as $program) {
+                $start = Carbon::parse($program->waktu_mulai);
+                $end = Carbon::parse($program->waktu_berakhir);
+
+                if ($logDate->between($start, $end)) {
+                    // Calculate the week number
+                    $weekNumber = $logDate->diffInWeeks($start) + 1; // Adding 1 to start from week 1
+
+                    // Store data for the week
+                    if (!isset($weekData[$weekNumber])) {
+                        $weekData[$weekNumber] = [];
+                    }
+                    $weekData[$weekNumber][] = $log;
+
+                    break; // No need to continue checking other programs once a match is found
+                }
+            }
+        }
+
+        return $weekData;
+
+    }
+     public function countWeek($id)
+    {
+        $data_program_kegiatan = ProgramKegiatan::where('user_id', $id)->get();
+        // Retrieve the authenticated user's LogHarian records
+        $result = LogHarian::where('user_id', $id)->get();
+
+        foreach ($result as $log) {
+            $logDate = Carbon::parse($log->tanggal);
+
+            foreach ($data_program_kegiatan as $program) {
+                $start = Carbon::parse($program->waktu_mulai);
+                $end = Carbon::parse($program->waktu_berakhir);
+
+                if ($logDate->between($start, $end)) {
+                    // Calculate the week number and return it
+                    return $logDate->diffInWeeks($start) + 1; // Adding 1 to start from week 1
+                }
+            }
+        }
+
+        // If no matching week is found, return a default value (you can adjust this as needed)
+        return 0;
+    }
+
     public function index(Request $request)
     {
         $result = LogHarian::all()->where('user_id', Auth::user()->id);
-        
+
         $groupedLogs = $result->groupBy(function ($log) {
             return Carbon::parse($log->created_at)->weekOfYear;
         });
-        
+
         $checkLogBookMingguan = $groupedLogs->sortBy(function ($logsInWeek, $weekNumber) {
             return $weekNumber;
         });
         $program = ProgramKegiatan::all()->where('user_id', Auth::user()->id);
+
         // $checkLogBookHarian = LogHarian::all()->where('user_id', Auth::user()->id);
-        $checkLogBookHarian = LogHarian::where('user_id',Auth::user()->id)
-        ->get()
-        ->groupBy(function ($date) {
-            return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
-        });
-        
+        $checkLogBookHarian = LogHarian::where('user_id', Auth::user()->id)
+            ->get()
+            ->groupBy(function ($date) {
+                return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
+            });
+
         return view('backend.mahasiswa.log.index', [
             'data' => $result,
-            'mingguan' => $checkLogBookMingguan,
+            'mingguan' =>$this->countWeek(Auth::user()->id),
             'program' => $program,
             'harian' => $checkLogBookHarian,
         ]);
@@ -55,76 +137,56 @@ class LogbookController extends Controller
             $harian = $request->get("harian");
             if ($mingguan) {
                 if (!Auth::check()) {
+                    // jika tidak terauntentikasi
                     $nim = $request->nim;
                     $getUserEntity = User::all()->where('nim', $nim)->first();
-
-                    // jika tidak terauntentikasi
                     $result = LogHarian::all()->where('user_id', $getUserEntity->id);
-                    $groupedLogs = $result->groupBy(function ($log) {
-                        return Carbon::parse($log->created_at)->weekOfMonth;
-                    });
-                    $checkLogBookMingguan = $groupedLogs->sortBy(function ($logsInWeek, $weekNumber) {
-                        return $weekNumber;
-                    });
-                    $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id', $getUserEntity->id)->first();
-                    // dd($mingguan);
-                    return response()->view("backend.mahasiswa.log.report-mingguan", [
-                        'program' => $program,
-                        'mingguan' => $checkLogBookMingguan[$mingguan],
-                    ]);
+                    // return response()->view("backend.mahasiswa.log.report-mingguan", [
+                    //     'program' => $program,
+                    //     'mingguan' => $checkLogBookMingguan[$mingguan],
+                    // ]);
                 } else {
                     // jika terauntikasi
-                    $result = LogHarian::all()->where('user_id', Auth::user()->id);
-                    
-                    $groupedLogs = $result->groupBy(function ($log) {
-                        
-                        return Carbon::parse($log->created_at)->weekOfMonth;
-                    });
-                    // dd($groupedLogs);
-                    $checkLogBookMingguan = $groupedLogs->sortBy(function ($logsInWeek, $weekNumber) {
-                        return $weekNumber;
-                    });
-                    
-                    $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id', Auth::user()->id)->first();
-                    
+                    // Retrieve the authenticated user's ProgramKegiatan records
+                    $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id',Auth::user()->id)->first();
+                    // Retrieve the authenticated user's LogHarian records
+                    $result = LogHarian::where('user_id', Auth::user()->id)->get();
                     return response()->view("backend.mahasiswa.log.report-mingguan", [
                         'program' => $program,
-                        'mingguan' => $checkLogBookMingguan[$mingguan],
+                        'mingguan' => $this->getLogsForWeek($program, $result,intval($mingguan)),
                     ]);
-                    
+
                 }
             }
 
             if ($harian != "") {
-                if(!Auth::check())
-                {
+                if (!Auth::check()) {
                     $nim = $request->nim;
                     $getUserEntity = User::all()->where('nim', $nim)->first();
-                    
-                    $result = LogHarian::all()->where('user_id',$getUserEntity->id);
-                    $checkLogBookHarian = LogHarian::where('user_id',$getUserEntity->id)
-                    ->get()
-                    ->groupBy(function ($date) {
-                        return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
-                    });
+                    $result = LogHarian::all()->where('user_id', $getUserEntity->id);
+                    $checkLogBookHarian = LogHarian::where('user_id', $getUserEntity->id)
+                        ->get()
+                        ->groupBy(function ($date) {
+                            return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
+                        });
                     $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id', $getUserEntity->id)->first();
-                    return response()->view("backend.mahasiswa.log.report-harian", [
-                        'program' => $program,
-                        'mingguan' => $checkLogBookHarian->get($harian,[]),
-                    ]);
-                }else{
-                    $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id',Auth::user()->id)->first();
-                    $result = LogHarian::all()->where('user_id', Auth::user()->id);
-                    $checkLogBookHarian = LogHarian::where('user_id',Auth::user()->id)
-                    ->get()
-                    ->groupBy(function ($date) {
-                        return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
-                    });
-                    return response()->view("backend.mahasiswa.log.report-harian", [
-                        'program' => $program,
-                        'mingguan' => $checkLogBookHarian->get($harian,[]),
-                    ]);
                     
+                    return response()->view("backend.mahasiswa.log.report-harian", [
+                        'program' => $program,
+                        'mingguan' => $checkLogBookHarian->get($harian, []),
+                    ]);
+                } else {
+                    $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id', Auth::user()->id)->first();
+                    $result = LogHarian::all()->where('user_id', Auth::user()->id);
+                    $checkLogBookHarian = LogHarian::where('user_id', Auth::user()->id)
+                        ->get()
+                        ->groupBy(function ($date) {
+                            return \Carbon\Carbon::parse($date->created_at)->format('Y-m-d');
+                        });
+                    return response()->view("backend.mahasiswa.log.report-harian", [
+                        'program' => $program,
+                        'mingguan' => $checkLogBookHarian->get($harian, []),
+                    ]);
                 }
             }
         }
@@ -148,7 +210,7 @@ class LogbookController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         $request->validate([
             'rencana_kegiatan' => 'required',
             'deskripsi' => 'required',
@@ -209,7 +271,7 @@ class LogbookController extends Controller
         $checkLogBookMingguan = $groupedLogs->sortBy(function ($logsInWeek, $weekNumber) {
             return $weekNumber;
         });
-        $harian = LogHarian::where('user_id',$data->id)
+        $harian = LogHarian::where('user_id', $data->id)
             ->orderBy('created_at') // Pastikan data diurutkan berdasarkan tanggal
             ->get()
             ->groupBy(function ($date) {
@@ -219,7 +281,7 @@ class LogbookController extends Controller
             'data' => $data->logbook,
             'program' => $program,
             'check' => $checkLogBookHarian,
-            'mingguan' => $checkLogBookMingguan,
+            'mingguan' => $this->countWeek($data->id),
             'harian' => $harian,
         ]);
     }
@@ -237,7 +299,7 @@ class LogbookController extends Controller
     public function update(Request $request, $id)
     {
         $data = LogHarian::find($id);
-        
+
         $request->validate([
             'status' => 'required'
         ]);

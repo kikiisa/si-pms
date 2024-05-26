@@ -199,8 +199,9 @@ class SettingController extends Controller
             }  
         }elseif($request->hasFile('surat_pernyataan'))
         {
+            
             $request->validate([
-                'surat_pernyataan' => 'required|mimes:docx',
+                'surat_pernyataan' => 'required|mimes:pdf',
             ]);
             File::delete($data->surat_pernyataan);
             $data->update([

@@ -33,10 +33,9 @@
                                                 <div class="col-lg-4">
                                                     <select name="mingguan" id="mingguan" onchange="return validasi()" class="form-control">
                                                         <option value="">Pilih Rekapan Mingguan</option>
-                                                        @foreach ($mingguan as $week)
-                                                            <option value="{{ $loop->index += 1 }}">{{ $loop->index += 1 - 1 }}
-                                                                Minggu</option>
-                                                        @endforeach
+                                                        @for ($i = 0; $i < $mingguan; $i++)
+                                                            <option value="{{ $i + 1 }}">Minggu Ke - {{ $i + 1 }}</option>
+                                                        @endfor
                                                     </select>
 
                                                     @if (!Auth::check())
