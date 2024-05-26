@@ -140,15 +140,17 @@ class LogbookController extends Controller
                     // jika tidak terauntentikasi
                     $nim = $request->nim;
                     $getUserEntity = User::all()->where('nim', $nim)->first();
+                    $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id',$getUserEntity->id)->first();
                     $result = LogHarian::all()->where('user_id', $getUserEntity->id);
-                    // return response()->view("backend.mahasiswa.log.report-mingguan", [
-                    //     'program' => $program,
-                    //     'mingguan' => $checkLogBookMingguan[$mingguan],
-                    // ]);
+                    return response()->view("backend.mahasiswa.log.report-mingguan", [
+                        'program' => $program,
+                        'mingguan' => $this->getLogsForWeek($program, $result,intval($mingguan)),
+                    ]);
                 } else {
                     // jika terauntikasi
                     // Retrieve the authenticated user's ProgramKegiatan records
                     $program = ProgramKegiatan::with('pamongs', 'user', 'dpls')->where('user_id',Auth::user()->id)->first();
+                    
                     // Retrieve the authenticated user's LogHarian records
                     $result = LogHarian::where('user_id', Auth::user()->id)->get();
                     return response()->view("backend.mahasiswa.log.report-mingguan", [
