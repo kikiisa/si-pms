@@ -17,6 +17,21 @@ class RencanaKegiatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    public function add_catatan_pamong(Request $request,$id)
+    {
+        $data = ProgramKegiatan::find($request->id);
+        $data->update([
+            'catatan_pamong' => $request->catatan_pamong
+        ]);
+        if($data)
+        {
+            return redirect()->back()->with('success','Berhasil Mengubah Status');
+        }else{
+            return redirect()->back()->with('error','Gagal Mengubah Status');
+        }
+    }
+
     public function index()
     {
         $check = ProgramKegiatan::all()->where('user_id',Auth::user()->id);
@@ -40,6 +55,20 @@ class RencanaKegiatanController extends Controller
             return redirect()->back()->with('success','Berhasil Mengubah Status');
         }else{
             return redirect()->back()->with('error','Gagal Mengubah Status');
+        }
+    }
+
+    public function add_catatan_dpl(Request $request,$id)
+    {
+        $data = ProgramKegiatan::find($id);
+        $data->update([
+            'catatan_dpl' => $request->catatan_dpl
+        ]);
+        if($data)
+        {
+            return redirect()->back()->with('success','Berhasil Menambahkan Catatan');
+        }else{
+            return redirect()->back()->with('error', 'Gagal Menambahkan Catatan');
         }
     }
     public function add_catatan(Request $request,$id)

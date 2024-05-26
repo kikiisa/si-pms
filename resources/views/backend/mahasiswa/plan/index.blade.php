@@ -145,7 +145,11 @@
                                                             <a href="javascript:void()" class="btn btn-dark"
                                                                 onclick="return showLaporanMk()">Lihat Laporan Mata Kuliah</a>
                                                             <a onclick="return tambahCatatan()" href="javascript:void()"
-                                                                class="btn btn-success">Lihat Catatan</a>
+                                                                class="btn btn-success">Lihat Catatan Dosen MK</a>
+                                                            <a onclick="return tambahCatatanDpl()" href="javascript:void()"
+                                                                class="btn btn-success">Lihat Catatan DPL</a>
+                                                            <a onclick="return tambahCatatanPamong()" href="javascript:void()"
+                                                                class="btn btn-success">Lihat Catatan Pamong</a>
                                                             <a href="javascript:void()" onclick="return rencanaKegiatan()"
                                                                 class="btn btn-success">Lihat File Rencana
                                                                 Kegiatan</a>
@@ -179,6 +183,50 @@
                             {!! $program->catatan !!}
                         @else
                             <div class="alert alert-danger fw-bold">Belum Ada Catatan Dari Dosen MK</div>
+                        @endisset
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="catatan_pamong" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Lihat Catatan</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @isset($program->catatan_pamong)
+                            {!! $program->catatan_pamong !!}
+                        @else
+                            <div class="alert alert-danger fw-bold">Belum Ada Catatan Dari Guru Pamong</div>
+                        @endisset
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="catatan_dpl" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Lihat Catatan</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @isset($program->catatan_dpl)
+                            {!! $program->catatan_dpl !!}
+                        @else
+                            <div class="alert alert-danger fw-bold">Belum Ada Catatan Dari Dosen DPL</div>
                         @endisset
                     </div>
                     <div class="modal-footer">
@@ -284,6 +332,12 @@
     <script>
         const tambahCatatan = () => {
             $('#catatan').appendTo("body").modal('show');
+        }
+        const tambahCatatanDpl = () => {
+            $('#catatan_dpl').appendTo("body").modal('show');
+        }
+        const tambahCatatanPamong = () => {
+            $('#catatan_pamong').appendTo("body").modal('show');
         }
         const laporanAkhir = () => {
             $('#laporan_akhir').appendTo("body").modal('show');

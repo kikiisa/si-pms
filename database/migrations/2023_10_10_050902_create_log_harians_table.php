@@ -23,6 +23,7 @@ return new class extends Migration
             $table->time('berakhir');
             $table->enum('category',['harian','mingguan']);
             $table->enum('status',[0,1,2])->default(0);
+            $table->string("image");
             $table->timestamps();
         });
     }

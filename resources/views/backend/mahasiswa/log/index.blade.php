@@ -146,7 +146,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ Route('logbook.store') }}" method="post">
+                        <form action="{{ Route('logbook.store') }}" method="post" enctype="multipart/form-data">
                             @method('POST')
                             @csrf
                             <div class="form-group">
@@ -171,6 +171,10 @@
                             <div class="form-group">
                                 <label for="">Deskripsi Kegiatan</label>
                                 <textarea required id="deskripsi" name="deskripsi" id="" cols="30" rows="10">{{ old('deskripsi') }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="file">File Gambar</label>
+                                <input type="file" name="image" id="file" class="form-control-file">
                             </div>
                             <button class="btn btn-primary">simpan</button>
                         </form>

@@ -58,7 +58,12 @@ Route::prefix('/account')->group(function(){
         Route::put('status_aktif/{id}',[UserControlller::class,'status'])->name('status');
         Route::post('upload-pembagian',[RencanaKegiatanController::class,'upload_pembagian'])->name('upload_pembagian');
         Route::put('upload-pembagian/{id}',[RencanaKegiatanController::class,'ubah_pembagian'])->name('upload_pembagian.update');
+        
         Route::put('tambah-catatan/{id}',[RencanaKegiatanController::class,'add_catatan'])->name("catatan");
+        Route::put("update-catatan/{id}",[RencanaKegiatanController::class,'add_catatan_dpl'])->name("catatan_dpl");
+        Route::put('update-catatan-pamong/{id}',[RencanaKegiatanController::class,'add_catatan_pamong'])->name('catatan_pamong');
+        
+        
         Route::get('log-book/{id}',[LogbookController::class,'detailLogBook'])->name('detailLog');
         Route::resource('mahasiswa',UserControlller::class);
         Route::resource('logbook',LogbookController::class);
@@ -68,18 +73,13 @@ Route::prefix('/account')->group(function(){
         Route::put('/upload-mk',[LaporanController::class,'uploadLaporanMk'])->name('uploadLaporanMk');
     });
 
-    
-
-    
-    
-    
-    
     // mahasiswa akses
     Route::middleware('auth')->group(function(){
         Route::get('log-book',[LogbookController::class,'index'])->name('logbook');
         Route::get('laporan',[LaporanController::class,'index'])->name('laporan');
         Route::post('tambah-laporan',[LaporanController::class,'tambahLaporan'])->name('tambahLaporan');
         Route::resource('rencana-kegiatan',RencanaKegiatanController::class);
+
     });
 
     Route::middleware('operatorauth')->group(function(){

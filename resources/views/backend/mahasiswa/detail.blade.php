@@ -7,8 +7,8 @@
         <div class="section-body">
             <div class="row justify-content-center">
                 <div class="col-lg-4">
-                    {{$data->profile}}
-                    @if($data->profile == "")
+                    {{ $data->profile }}
+                    @if ($data->profile == '')
                         <div class="card rounded-circle">
                             <img src="{{ asset('vendor/img/avatar/avatar-1.png') }}"alt="" class="card-img-top" srcset="">
 
@@ -86,22 +86,27 @@
 
                                             <td>
                                                 @if ($program->status == 0)
-                                                    <div class="badge bg-danger text-white">Belum Di Verifikasi Guru Pamong</div>
+                                                    <div class="badge bg-danger text-white">Belum Di Verifikasi Guru Pamong
+                                                    </div>
                                                 @else
                                                     <a href="javascript:void()" onclick="return laporanAkhir()"
                                                         class="btn btn-primary">Lihat Laporan Akhir</a>
                                                     <a href="javascript:void()" onclick="return laporanUmum()"
                                                         class="btn btn-outline-primary">Lihat Laporan Umum</a>
                                                 @endif
-                                                @if (Auth::guard("dpls")->check())
-                                                    @if (Auth::guard("dpls")->user()->roles == "mk")
+                                                @if (Auth::guard('dpls')->check())
+                                                    @if (Auth::guard('dpls')->user()->roles == 'mk')
                                                         <a href="javascript:void()" onclick="return showCatatan()"
-                                                            class="btn btn-success">Lihat Catatan</a>
+                                                            class="btn btn-success">Lihat Catatan Dosen MK</a>
                                                     @endif
                                                 @endif
-                                                @if (Auth::guard("pamongs")->check())
+                                                @if (Auth::guard('pamongs')->check())
                                                     <a href="javascript:void()" onclick="return showCatatan()"
-                                                    class="btn btn-success">Lihat Catatan</a>
+                                                        class="btn btn-success">Lihat Catatan Dosen MK</a>
+                                                        <a onclick="return lihatCatatanDpl()" href="javascript:void()"
+                                                        class="btn btn-success">Catatan DPL</a>
+                                                    <button onclick="return tambahCatatanPamong()"
+                                                        class="btn btn-success">Tambah Catatan Pamong</button>
                                                 @endif
                                                 <a href="javascript:void()" onclick="return openPDFRencanaKegiatan()"
                                                     class="btn btn-success">Lihat File Rencana Kegiatan</a>
@@ -110,8 +115,20 @@
                                                 @if (Auth::guard('dpls')->check())
                                                     @if (Auth::guard('dpls')->user()->roles == 'mk')
                                                         <button onclick="return tambahCatatan()"
-                                                            class="btn btn-success">Tambah Catatan</button>
+                                                            class="btn btn-success">Tambah Catatan Dosen MK</button>
+                                                        <a onclick="return lihatCatatanDpl()" href="javascript:void()"
+                                                            class="btn btn-success">Catatan DPL</a>
+                                                            <a onclick="return lihatCatatanPamong()" href="javascript:void()"
+                                                            class="btn btn-success">Lihat Catatan Pamong</a>
+                                                    @else
+                                                        <a href="javascript:void()" onclick="return showCatatan()"
+                                                        class="btn btn-success">Lihat Catatan Dosen MK</a>
+                                                        <a onclick="return tambahCatatanDpl()" href="javascript:void()"
+                                                        class="btn btn-success">Tambah Catatan DPL</a>
+                                                        <a onclick="return lihatCatatanPamong()" href="javascript:void()"
+                                                        class="btn btn-success">Lihat Catatan Pamong</a>
                                                     @endif
+
                                                 @endif
 
                                             </td>
@@ -255,20 +272,42 @@
         </div>
     </div>
     @isset($program)
-        <div class="modal fade" id="catatan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="show_catatan_dpl" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Tambah Catatan</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Lihat Catatan</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ Route('catatan', $program->id) }}" method="post">
+                        @isset($program->catatan_dpl)
+                            {!! $program->catatan_dpl !!}
+                        @else
+                            <div class="alert alert-danger fw-bold">Belum Ada Catatan Dari Dosen DPL</div>
+                        @endisset
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="catatan_dpl" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Catatan Dpl</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ Route('catatan_dpl', $program->id) }}" method="post">
                             @csrf
                             @method('PUT')
-                            <textarea name="catatan" id="deskripsi" cols="30" rows="10">{{ $program->catatan }}</textarea>
+                            <textarea name="catatan_dpl" id="deskripsi" cols="30" rows="10">{{ $program->catatan_dpl }}</textarea>
                             <button class="btn btn-primary mt-3">simpan</button>
                         </form>
                     </div>
@@ -278,7 +317,80 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="catatan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Catatan Mata Kuliah</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ Route('catatan', $program->id) }}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <textarea name="catatan" class="form-control" id="deskripsi" cols="30" rows="10">{{ $program->catatan }}</textarea>
+                            <button class="btn btn-primary mt-3">simpan</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="catatan_pamong" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Catatan Pamong</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ Route('catatan_pamong', $program->id) }}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <textarea name="catatan_pamong" class="form-control" cols="30" rows="10">{{ $program->catatan_pamong }}</textarea>
+                            <button class="btn btn-primary mt-3">simpan</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="lihat_catatan_pamong" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Lihat Catatan Pamong</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            @isset($program->catatan_pamong)
+                                {!! $program->catatan_pamong !!}
+                            @else
+                                <div class="alert alert-danger fw-bold">Belum Ada Catatan Dari Dosen MK</div>
+                            @endisset
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endisset
+
     <div class="modal fade" id="pdfrencanakegiatan" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -435,7 +547,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Lihat Catatan</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Lihat Catatan Dosen MK</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -445,6 +557,29 @@
                             {!! $program->catatan !!}
                         @else
                             <div class="alert alert-danger fw-bold">Belum Ada Catatan Dari Dosen MK</div>
+                        @endisset
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="show_catatan_dpl" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Lihat Catatan</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @isset($program->catatan_dpl)
+                            {!! $program->catatan_dpl !!}
+                        @else
+                            <div class="alert alert-danger fw-bold">Belum Ada Catatan Dari Dosen DPL</div>
                         @endisset
                     </div>
                     <div class="modal-footer">
@@ -471,6 +606,9 @@
     const laporanAkhir = () => {
         $('#laporan_akhir').appendTo("body").modal('show');
     }
+    const tambahCatatanPamong = () => {
+        $('#catatan_pamong').appendTo("body").modal('show');
+    }
     const laporanUmum = () => {
         $('#laporan_umum').appendTo("body").modal('show');
     }
@@ -479,6 +617,15 @@
     }
     const showLaporanMk = () => {
         $('#show_laporan_mk').appendTo("body").modal('show');
+    }
+    const tambahCatatanDpl = () => {
+        $("#catatan_dpl").appendTo("body").modal("show")
+    }
+    const lihatCatatanPamong = () => {
+        $("#lihat_catatan_pamong").appendTo("body").modal("show")
+    }
+    const lihatCatatanDpl = () => {
+        $("#show_catatan_dpl").appendTo("body").modal("show")
     }
 </script>
 <script src="{{ asset('vendor/modules/toastify/src/toastify.js') }}"></script>

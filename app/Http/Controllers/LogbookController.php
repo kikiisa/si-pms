@@ -9,10 +9,12 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Ramsey\Uuid\Uuid;
 
 class LogbookController extends Controller
 {
+    private $path = "storage/image/";
     /**
      * Display a listing of the resource.
      *
@@ -146,13 +148,19 @@ class LogbookController extends Controller
      */
     public function store(Request $request)
     {
+       
         $request->validate([
             'rencana_kegiatan' => 'required',
             'deskripsi' => 'required',
             'kategori' => 'required',
             'mulai' => 'required',
-            'berakhir' => 'required'
+            'berakhir' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+        $file = $request->file("image");
+        $newName = $file->hashName();
+        $file->move($this->path, $newName);
+        $finalName = $this->path . $newName;
         $data = LogHarian::create([
             'uuid' => Uuid::uuid4()->toString(),
             'rencana_kegiatan' => $request->rencana_kegiatan,
@@ -160,7 +168,8 @@ class LogbookController extends Controller
             'mulai' => $request->mulai,
             'berakhir' => $request->berakhir,
             'category' => $request->kategori,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            "image" => $finalName,
         ]);
         if ($data) {
             return redirect()->back()->with('success', 'Berhasil Menambahkan Log Book Harian');
@@ -249,6 +258,7 @@ class LogbookController extends Controller
     public function destroy($id)
     {
         $data = LogHarian::find($id);
+        File::delete($data->image);
         $data->delete();
         if ($data) {
             return redirect()->back()->with('success', 'Berhasil Menghapus Data');

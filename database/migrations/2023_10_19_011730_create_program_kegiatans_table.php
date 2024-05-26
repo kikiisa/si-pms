@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('laporan_akhir')->nullable();
             $table->string('laporan_mk')->nullable();
             $table->text('catatan')->nullable();
+            $table->text("catatan_pamong")->nullable();
+            $table->text("catatan_dpl")->nullable();
             $table->date('waktu_mulai');
             $table->date('waktu_berakhir');
             $table->enum('status',[1,0])->default(0);

@@ -6,8 +6,18 @@
         </div>
         <div class="section-body">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="card">
+                        <div class="card-body">
+                          
+                                <img class="img-thumbnail" src="{{ asset($data->image) }}">
+                          
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        
                         <div class="card-body">
                             <h5>{{$data->rencana_kegiatan}}</h5>
                             <div class="content mt-3 mb-3">
